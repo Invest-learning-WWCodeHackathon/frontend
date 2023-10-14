@@ -1,0 +1,15 @@
+@import url('https://fonts.cdnfonts.com/css/mirra-auriolic');
+@import url('https://fonts.cdnfonts.com/css/poiret-one');
+@import url('https://fonts.cdnfonts.com/css/montserrat');
+                
+
+.hero-heading{
+    font-family: 'Mirra Auriolic', sans-serif;
+    /* font-family: 'Poiret One', sans-serif; */
+                                                
+    font-size: 8rem; 
+}
+
+.hero-text{
+    font-family: 'Montserrat', sans-serif;
+}
