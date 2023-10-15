@@ -1,0 +1,34 @@
+.quizzes-heading {
+  font-family: "Mirra Auriolic", sans-serif;
+  font-size: 4rem;
+  letter-spacing: 20px;
+  /* position: absolute; */
+  top: 20%;
+  left: 50%;
+  /* transform: translate(-50%, -50%); */
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.7);
+  /* border-radius: 15px; */
+  padding: 10px;
+  margin: 0;
+}
+.quizzes-text {
+  font-size: 2rem;
+  margin-top: 120px;
+  top: 50%;
+  left: 50%;
+  /* padding: 0 50px; */
+  padding-right: 80px;
+  margin-right: 50px;
+  transform: translate(-05%, 0%);
+}
+
+.quizzes-image {
+  height: 120%;
+  width: 70%;
+  border-radius: 5px;
+}
+
+.quizzes-button {
+  background-color: #1890ff;
+}
