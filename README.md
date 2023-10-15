@@ -1,12 +1,10 @@
-# Getting Started with Create React App
+get started, please follow these steps:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. Fork the Repository: Click the "Fork" button on the top right of this repository to create your own copy.
 
-## Available Scripts
+2. Clone Your Fork: Clone your fork of the repository to your local machine.
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Clone this repository: `git clone url`
+2. Change to the project directory: `cd project`
+3. Install dependencies: `npm install`
+4. run: `npm start`

@@ -13,3 +13,9 @@
 .hero-text{
     font-family: 'Montserrat', sans-serif;
 }
+
+.hero-text span{
+    background-color: rgb(52, 52, 52);
+    color: #0dcaf0;
+    padding: 0 5px;
+}
