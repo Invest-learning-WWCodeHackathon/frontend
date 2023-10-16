@@ -68,10 +68,10 @@ export default function Features() {
   return (
     <Box p={4}>
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
-        <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
+        <Heading color="blue.500" fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
           Our Features
         </Heading>
-        <Text color={'gray.600'} fontSize={{ base: 'sm', sm: 'lg' }}>
+        <Text color={'gray.400'} fontSize={{ base: 'sm', sm: 'lg' }}>
         Discover the key features that make our platform stand out and provide you with an exceptional experience.
         </Text>
       </Stack>
