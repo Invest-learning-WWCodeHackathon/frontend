@@ -1,16 +1,15 @@
 import { Container } from 'react-bootstrap';
+import Features from './Features';
 
 import Hero from './Hero';
 
 function Home() {
 
     return (
-        <div className="">
             <Container>
-                <Hero />
+                <Hero/>
+                <Features/>
             </Container>
-
-        </div>
     );
 }
 
