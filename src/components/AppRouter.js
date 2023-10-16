@@ -5,6 +5,7 @@ import Home from './Home';
 import Quizzes from './Quizzes';
 import Footer from './Footer';
 import AboutPage from './About';
+import Dashboard from './StockMarketDashboard';
 
 function AppRouter() {
   return (
@@ -14,6 +15,7 @@ function AppRouter() {
         <Route exact path="/" element={<Home/>} />
         <Route path="/about" element={<AboutPage/>} />
         <Route path="/quizzes" element={<Quizzes/>} />
+        <Route path="/dashboard" element={<Dashboard/>}/>
       </Routes>
       <Footer />
     </BrowserRouter>

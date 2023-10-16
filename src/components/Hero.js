@@ -38,7 +38,7 @@ export default function Hero() {
             Build Your Financial Empire!
             </Text>
           </Heading>
-          <Text color={'gray.400'}>
+          <Text color={useColorModeValue('gray.500', 'gray.400')}>
           Inspiring the next generation to conquer the stock market through education and empowerment with DoughDynasty: Your Gateway to Financial Success.
           </Text>
           <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>

@@ -8,7 +8,8 @@ import {
   extendTheme,
   CSSReset,
   Stack,
-  Container
+  Container,
+  useColorModeValue
 } from "@chakra-ui/react";
 //   import { ExternalLinkIcon } from "@chakra-ui/icons";
 import TeamMemberCards from "./TeamMembers";
@@ -45,7 +46,7 @@ function AboutPage() {
             </Text>
             <br />
           </Heading>
-          <Text p={5} m={5} color={'gray.400'} fontSize={{ base: 'sm', sm: 'lg' }}>
+          <Text p={5} m={5} color={useColorModeValue('gray.500', 'gray.400')} fontSize={{ base: 'sm', sm: 'lg' }}>
             Welcome to Dough Dynasty! We're thrilled that you've chosen
             to embark on this exciting journey of financial learning with us.
             Our mission is to empower teenagers like you with essential

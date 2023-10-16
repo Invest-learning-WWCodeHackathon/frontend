@@ -71,7 +71,7 @@ export default function Features() {
         <Heading color="blue.500" fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
           Our Features
         </Heading>
-        <Text color={'gray.400'} fontSize={{ base: 'sm', sm: 'lg' }}>
+        <Text color={useColorModeValue('gray.500', 'gray.400')} fontSize={{ base: 'sm', sm: 'lg' }}>
         Discover the key features that make our platform stand out and provide you with an exceptional experience.
         </Text>
       </Stack>
