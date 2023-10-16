@@ -27,9 +27,9 @@ import {
   FiStar,
   FiSettings,
   FiMenu,
-  FiBell,
   FiChevronDown,
 } from 'react-icons/fi'
+import DashboardHome from './DashboardHome'
 
 
 const LinkItems = [
@@ -48,8 +48,8 @@ const SidebarContent = ({ onClose, ...rest }) => {
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
       w={{ base: 'full', md: 60 }}
-      pos="fixed"
-      h="full"
+      pos="absolute"
+      h="100vh"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
@@ -130,7 +130,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
       </Text>
 
       <HStack spacing={{ base: '0', md: '6' }}>
-        <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+        {/* <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} /> */}
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
@@ -192,7 +192,7 @@ const SidebarWithHeader = () => {
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        {/* Content */}
+        <DashboardHome/>
       </Box>
     </Box>
   )

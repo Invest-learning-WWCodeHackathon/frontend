@@ -11,7 +11,6 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { ReactElement } from 'react'
 import {
   FcAbout,
   FcAssistant,
@@ -21,14 +20,7 @@ import {
 } from 'react-icons/fc'
 import { Link } from 'react-router-dom';
 
-const CardProps = {
-    heading: 'string',
-    description: 'string',
-    icon: ReactElement,
-    href: 'string',
-  };
-
-const Card = ({ heading, description, icon, href }: CardProps) => {
+const Card = ({ heading, description, icon, href }) => {
   return (
     <Box
       maxW={{ base: 'full', md: '275px' }}
@@ -94,7 +86,7 @@ export default function Features() {
             heading={'Stock Market'}
             icon={<Icon as={FcDonate} w={10} h={10} />}
             description={'Experience the excitement of stock market trading through our realistic simulation.'}
-            href={'#'}
+            href={'/dashboard'}
           />
           <Card
             heading={'E - Learning'}

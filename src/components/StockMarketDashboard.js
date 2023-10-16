@@ -1,11 +1,11 @@
 import { Container } from 'react-bootstrap';
-import DashboardHeader from './DashboardHeader';
+import SidebarWithHeader from './DashboardHeader';
 
 function Dashboard() {
 
     return (
             <Container>
-                <DashboardHeader/>
+                <SidebarWithHeader/>
             </Container>
     );
 }
