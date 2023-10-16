@@ -1,8 +1,10 @@
 'use client'
 
 import {
+    AbsoluteCenter,
     Box,
     Container,
+    Divider,
     Flex,
     Heading,
     HStack,
@@ -12,7 +14,9 @@ import {
 } from '@chakra-ui/react'
 import {
     FcBullish,
-     FcCurrencyExchange} from 'react-icons/fc'
+    FcCurrencyExchange
+} from 'react-icons/fc'
+import StocksOwnedTable from './StocksOwnedTable'
 
 const Card = ({ heading, icon, amount }) => {
     return (
@@ -32,8 +36,8 @@ const Card = ({ heading, icon, amount }) => {
                     align={'center'}
                     justify={'center'}
                     color={'white'}
-                    rounded={'full'}
-                    bg={useColorModeValue('gray.100', 'gray.700')}>
+                    rounded={'full'}>
+                   
                     {icon}
                 </Flex>
                 <Box m={2} justify={'end'} align={'end'}>
@@ -42,7 +46,7 @@ const Card = ({ heading, icon, amount }) => {
                         {amount}
                     </Text>
                 </Box>
-                
+
             </HStack>
         </Box>
     )
@@ -53,7 +57,7 @@ export default function DashboardHome() {
         <Box p={4}>
 
             <Container maxW={'5xl'} mt={12}>
-                <Flex flexWrap="wrap" gridGap={6} justify="center">
+                <Flex flexWrap="wrap" gridGap={6} justify="center" mb={14}>
                     <Card
                         heading={'Account Balance'}
                         icon={<Icon as={FcCurrencyExchange} w={10} h={10} />}
@@ -66,6 +70,8 @@ export default function DashboardHome() {
                     />
 
                 </Flex>
+                <Divider borderColor={useColorModeValue('gray.700', 'gray.400')} />
+                <StocksOwnedTable />
             </Container>
         </Box>
     )
