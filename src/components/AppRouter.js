@@ -6,6 +6,7 @@ import Quizzes from './Quizzes';
 import Footer from './Footer';
 import AboutPage from './About';
 import Dashboard from './StockMarketDashboard';
+import Auth from './Auth';
 
 function AppRouter() {
   return (
@@ -13,8 +14,9 @@ function AppRouter() {
       <Header />
       <Routes>
         <Route exact path="/" element={<Home/>} />
+        <Route path="/sign-up" element={<Auth/>} />
         <Route path="/about" element={<AboutPage/>} />
-        <Route path="/quizzes" element={<Quizzes/>} />
+        {/* <Route path="/quizzes" element={<Quizzes/>} /> */}
         <Route path="/dashboard" element={<Dashboard/>}/>
       </Routes>
       <Footer />
