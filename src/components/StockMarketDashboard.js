@@ -26,9 +26,9 @@ function Dashboard() {
         </>
     return (
         <div>
-            <div >{!isAuthorized ? '' : 'Unauthorized'}</div>
+            <div >{isAuthorized ? '' : 'Unauthorized'}</div>
             <div >
-                {!isAuthorized ? authorizedBody : unauthorizedBody}
+                {isAuthorized ? authorizedBody : unauthorizedBody}
             </div>
         </div>
     );
