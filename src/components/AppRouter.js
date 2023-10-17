@@ -16,7 +16,7 @@ function AppRouter() {
         <Route exact path="/" element={<Home />} />
         <Route path="/sign-up" element={<Auth />} />
         <Route path="/about" element={<AboutPage />} />
-        {/* <Route path="/quizzes" element={<Quizzes/>} /> */}
+        <Route path="/quizzes" element={<Quizzes />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />
