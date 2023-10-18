@@ -7,12 +7,6 @@ export default function useCurrentUser() {
         username: ''
     });
     const user = new PassageUser();
-    const logout = () =>{
-        // const value = await user.signOut();
-        console.log("logout called signout btn");
-        
-    }
-    
     useEffect(() => {
         let cancelRequest = false;
         user.userInfo().then(userInfo=> {
@@ -37,6 +31,5 @@ export default function useCurrentUser() {
             cancelRequest = true;
         };
     }, []);
-    // return result;
-    return { ...result, logout };
+    return result;
 }

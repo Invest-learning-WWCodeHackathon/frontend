@@ -20,6 +20,8 @@ import {
   MenuItem,
   MenuList,
 } from '@chakra-ui/react'
+import { PassageUser } from '@passageidentity/passage-elements/passage-user'
+import { useEffect } from 'react'
 import {
   FiHome,
   FiTrendingUp,
@@ -29,6 +31,7 @@ import {
   FiMenu,
   FiChevronDown,
 } from 'react-icons/fi'
+import useCurrentUser from '../hooks/useCurrectUser'
 
 import DashboardHome from './DashboardHome'
 import SignOutButton from './SignOutButton'
@@ -125,7 +128,8 @@ const NavItem = ({ icon, children, ...rest }) => {
   )
 }
 
-const MobileNav = ({ onOpen, ...rest }) => {  
+const MobileNav = ({ onOpen, ...rest }) => {
+  const { username } = useCurrentUser();
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -170,10 +174,10 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2">
-                  <Text fontSize="sm">Justina Clark</Text>
-                  <Text fontSize="xs" color="gray.600">
+                  <Text fontSize="sm">{username}</Text>
+                  {/* <Text fontSize="xs" color="gray.600">
                     Admin
-                  </Text>
+                  </Text> */}
                 </VStack>
                 <Box display={{ base: 'none', md: 'flex' }}>
                   <FiChevronDown />
@@ -187,13 +191,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={(event) => {
-                // signout()
-            }}>Sign</MenuItem>
-            <MenuItem>
-              <SignOutButton/>
-            </MenuItem>
-            
+              <MenuItem>
+                <SignOutButton />
+              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>
@@ -222,7 +222,7 @@ const SidebarWithHeader = () => {
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        <DashboardHome/>
+        <DashboardHome />
       </Box>
     </Box>
   )
