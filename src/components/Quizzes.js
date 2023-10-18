@@ -7,12 +7,11 @@ import {
   CSSReset,
   Stack,
   Container,
-  useColorModeValue,
   RadioGroup,
   Radio,
+  Button,
 } from "@chakra-ui/react";
 //   import { ExternalLinkIcon } from "@chakra-ui/icons";
-import TeamMemberCards from "./TeamMembers";
 
 const testQuestion = {
   question: "What is the capital of France?",
@@ -83,11 +82,27 @@ function QuizzesPage() {
               <Radio value="4">D: {testQuestion.option4}</Radio>
             </Stack>
           </RadioGroup>
-          {/* add a button to submit here */}
+          <Stack
+            spacing={{ base: 4, sm: 6 }}
+            direction={{ base: "column", sm: "row" }}
+          >
+            <Button
+              rounded={"full"}
+              size={"lg"}
+              fontWeight={"normal"}
+              px={6}
+              colorScheme={"blue"}
+              bg={"blue.400"}
+              _hover={{ bg: "blue.500" }}
+              // onClick={}
+            >
+              Submit your answer!{" "}
+            </Button>
+          </Stack>{" "}
           <Heading as="h2" size="lg" mt={6} color="blue.500">
             Why?
+            <h3>{testQuestion.explanation}</h3>
           </Heading>
-
           {/* replace with a explanation card that contains links to other resources  <TeamMemberCards /> */}
         </Stack>
       </Box>
