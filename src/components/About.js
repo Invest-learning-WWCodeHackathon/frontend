@@ -14,14 +14,10 @@ import {
 //   import { ExternalLinkIcon } from "@chakra-ui/icons";
 import TeamMemberCards from "./TeamMembers";
 
-const customTheme = extendTheme({
-  // Define your custom theme, including the blue color scheme.
-  // You can set the color scheme using the `extendTheme` function.
-});
 
 function AboutPage() {
   return (
-    <ChakraProvider theme={customTheme}>
+    <ChakraProvider>
       <CSSReset />
       <Box p={3} m={5} pt={5}>
         <Stack spacing={4} as={Container} maxW={'5xl'} textAlign={'center'}>

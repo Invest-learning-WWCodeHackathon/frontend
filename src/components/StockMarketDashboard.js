@@ -1,6 +1,19 @@
-import { Container } from 'react-bootstrap';
 import  useCurrentUser from '../hooks/useCurrectUser';
 import SidebarWithHeader from './DashboardHeader';
+
+import {
+    ChakraProvider,
+    Box,
+    Heading,
+    Text,
+    extendTheme,
+    CSSReset,
+    Stack,
+    Container,
+    useColorModeValue,
+    Link,
+    Button
+  } from "@chakra-ui/react";
 
 function Dashboard() {
     const { isLoading, isAuthorized, username } = useCurrentUser();
@@ -10,9 +23,6 @@ function Dashboard() {
     }
     const authorizedBody =
         <>
-            {/* You successfully signed in with Passage. */}
-            {/* <br /><br /> */}
-            {/* Your email is: <b>{username}</b> */}
             <Container>
                 <SidebarWithHeader />
             </Container>
@@ -20,13 +30,46 @@ function Dashboard() {
 
     const unauthorizedBody =
         <>
-            You have not logged in and cannot view the dashboard.
+            <ChakraProvider>
+                <CSSReset />
+                <Box p={3} m={5} pt={5} height={'60vh'}>
+                    <Stack spacing={4} as={Container} maxW={'5xl'} textAlign={'center'}>
+                    <Heading m={5}
+                        lineHeight={1.1}
+                        fontWeight={600}
+                        fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}>
+                        <Text
+                        as={'span'}
+                        position={'relative'}
+                        _after={{
+                            content: "''",
+                            width: 'full',
+                            height: '30%',
+                            position: 'absolute',
+                            bottom: 1,
+                            left: 0,
+                            bg: 'blue.400',
+                            zIndex: -1,
+                        }} >
+                        Dough Dynasty
+                        </Text>
+                        <br />
+                    </Heading>
+                    <Text p={5} m={5} color={'gray.500'} fontSize={{ base: 'sm', sm: 'lg' }}>
+                        Please log in to access the dashboard.
+                    </Text>
+                    <Link href={"/sign-up"}>
+                        <Button colorScheme={"blue"} size={"sm"}>
+                            Sign in to continue
+                        </Button>
+                    </Link>
+                    </Stack>
+                </Box>
+            </ChakraProvider>
             <br /><br />
-            <a href="/sign-up">Login to continue.</a>
         </>
     return (
         <div>
-            <div >{isAuthorized ? '' : 'Unauthorized'}</div>
             <div >
                 {isAuthorized ? authorizedBody : unauthorizedBody}
             </div>
