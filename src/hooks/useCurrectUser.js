@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import { PassageUser } from '@passageidentity/passage-auth/passage-user';
-
-export function useCurrentUser() {
+export default function useCurrentUser() {
     const [result, setResult] = useState({
         isLoading: true,
         isAuthorized: false,
-        username: '',
+        username: ''
     });
-
+    const user = new PassageUser();
+    const logout = () =>{
+        // const value = await user.signOut();
+        console.log("logout called signout btn");
+        
+    }
+    
     useEffect(() => {
         let cancelRequest = false;
-        new PassageUser().userInfo().then(userInfo=> {
+        user.userInfo().then(userInfo=> {
             if( cancelRequest ) {
                 return;
             }
@@ -32,5 +37,6 @@ export function useCurrentUser() {
             cancelRequest = true;
         };
     }, []);
-    return result;
+    // return result;
+    return { ...result, logout };
 }

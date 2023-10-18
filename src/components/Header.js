@@ -72,7 +72,7 @@ export default function WithSubnavigation() {
             <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
+          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'/sign-up'}>
             Sign In
           </Button>
           <Button
@@ -82,7 +82,7 @@ export default function WithSubnavigation() {
             fontWeight={600}
             color={'white'}
             bg={'blue.400'}
-            href={'#'}
+            href={'sign-up'}
             _hover={{
               bg: 'blue.300',
             }}>

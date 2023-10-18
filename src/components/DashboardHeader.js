@@ -29,8 +29,32 @@ import {
   FiMenu,
   FiChevronDown,
 } from 'react-icons/fi'
-import DashboardHome from './DashboardHome'
 
+import DashboardHome from './DashboardHome'
+import SignOutButton from './SignOutButton'
+// import { PassageUser } from '@passageidentity/passage-elements/passage-user';
+// // import { useHistory } from 'react-router-dom';
+// const user = new PassageUser();
+
+// function navigateToHome(){
+//   const navigate = useNavigate();
+//   navigate("/home");
+// }
+
+// async function signout(){
+//   try{
+//     const value = await user.signOut();
+
+//     if(value){
+//       console.log("logged out");
+//       const history = useHistory();
+//       history.push("/home");  
+//     }
+//   }
+//   catch(e){
+//     console.error("Signout failed:", error);
+//   }
+// }
 
 const LinkItems = [
   { name: 'Home', icon: FiHome },
@@ -101,7 +125,7 @@ const NavItem = ({ icon, children, ...rest }) => {
   )
 }
 
-const MobileNav = ({ onOpen, ...rest }) => {
+const MobileNav = ({ onOpen, ...rest }) => {  
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -131,7 +155,6 @@ const MobileNav = ({ onOpen, ...rest }) => {
       </Text>
 
       <HStack spacing={{ base: '0', md: '6' }}>
-        {/* <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} /> */}
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
@@ -164,7 +187,13 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={(event) => {
+                // signout()
+            }}>Sign</MenuItem>
+            <MenuItem>
+              <SignOutButton/>
+            </MenuItem>
+            
             </MenuList>
           </Menu>
         </Flex>

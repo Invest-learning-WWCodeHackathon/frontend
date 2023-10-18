@@ -1,5 +1,5 @@
 import { Container } from 'react-bootstrap';
-import { useCurrentUser } from '../hooks/useCurrectUser';
+import  useCurrentUser from '../hooks/useCurrectUser';
 import SidebarWithHeader from './DashboardHeader';
 
 function Dashboard() {
@@ -22,7 +22,7 @@ function Dashboard() {
         <>
             You have not logged in and cannot view the dashboard.
             <br /><br />
-            <a href="/">Login to continue.</a>
+            <a href="/sign-up">Login to continue.</a>
         </>
     return (
         <div>
