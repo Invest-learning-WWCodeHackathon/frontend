@@ -1,43 +1,19 @@
 import {
   ChakraProvider,
-  Box,
-  Heading,
-  Text,
   extendTheme,
   CSSReset,
+  useToast,
+  Box,
+  useRadioGroup,
   Stack,
-  Container,
   RadioGroup,
+  Text,
   Radio,
+  Heading,
+  Container,
   Button,
 } from "@chakra-ui/react";
-//   import { ExternalLinkIcon } from "@chakra-ui/icons";
-
-const testQuestion = {
-  question: "What is the capital of France?",
-  option1: "London",
-  option2: "Paris",
-  option3: "Berlin",
-  option4: "New York City",
-  correctAnswer: "Paris",
-  explanation: "it's a city",
-};
-
-function givesAnswer(userAnswer, question) {
-  let correctAnswer;
-  userAnswer = userAnswer.toLowerCase();
-  correctAnswer = question.correctAnswer;
-  if (userAnswer === correctAnswer.toLowerCase())
-    return correctAnswer + "\n Why? " + question.explanation;
-  else {
-    return (
-      "Incorrect it is " + correctAnswer + "\n Why? " + question.explanation
-    );
-  }
-}
-
-console.log("correct: " + givesAnswer("Paris", testQuestion));
-console.log("incorrect: " + givesAnswer("jupiter", testQuestion));
+import React, { useState } from "react";
 
 const customTheme = extendTheme({
   // Define your custom theme, including the blue color scheme.
@@ -45,6 +21,70 @@ const customTheme = extendTheme({
 });
 
 function QuizzesPage() {
+  const toast = useToast();
+
+  const testQuestion = {
+    question: "What is the capital of France?",
+    option1: "London",
+    option2: "Paris",
+    option3: "Berlin",
+    option4: "New York City",
+    correctAnswer: "Paris",
+    explanation: "it's a city",
+  };
+
+  const questions_formated = [
+    { letter: "A", option: testQuestion.option1 },
+    { letter: "B", option: testQuestion.option2 },
+    { letter: "C", option: testQuestion.option3 },
+    { letter: "D", option: testQuestion.option4 },
+  ];
+
+  // stores the current selection
+  const handleChange = (value) => {
+    console.log("line 44", value);
+  };
+
+  function givesAnswer(userAnswer, question) {
+    let correctAnswer;
+    correctAnswer = question.correctAnswer;
+    console.log(correctAnswer, userAnswer);
+    if (userAnswer === correctAnswer)
+      // add points
+      return toast({
+        title: `Correct! It is ${userAnswer}!`,
+        description: `\nWhy? ${question.explanation}`,
+        status: "success",
+        duration: 4000,
+        position: "top",
+        containerStyle: {
+          width: "800px",
+          maxWidth: "100%",
+        },
+      });
+    else {
+      return toast({
+        title: `Darn it is ${correctAnswer}`,
+        description: `Why? ${question.explanation}`,
+        status: "error",
+        duration: 4000,
+        position: "top",
+        containerStyle: {
+          width: "800px",
+          maxWidth: "100%",
+        },
+      });
+    }
+  }
+  const handleSubmit = (value) => {
+    givesAnswer(value, testQuestion);
+  };
+
+  const { value, getRadioProps } = useRadioGroup({
+    defaultValue: "??",
+    onChange: handleChange,
+  });
+
   return (
     <ChakraProvider theme={customTheme}>
       <CSSReset />
@@ -76,34 +116,33 @@ function QuizzesPage() {
           </Heading>
           <RadioGroup size="lg" colorScheme="blue">
             <Stack>
-              <Radio value="1">A: {testQuestion.option1}</Radio>
-              <Radio value="2">B: {testQuestion.option2}</Radio>
-              <Radio value="3">C: {testQuestion.option3}</Radio>
-              <Radio value="4">D: {testQuestion.option4}</Radio>
+              {questions_formated.map((question) => {
+                return (
+                  <Radio
+                    key={question.option}
+                    value={question.option}
+                    {...getRadioProps({ value: question.option })}
+                  >
+                    {question.letter}: {question.option}
+                  </Radio>
+                );
+              })}
+              {/* here is where selected is stored */}
+              <Text>You guessed: {value}</Text>
+              <Button
+                rounded={"full"}
+                size={"md"}
+                fontWeight={"normal"}
+                px={6}
+                colorScheme={"blue"}
+                bg={"blue.400"}
+                _hover={{ bg: "blue.500" }}
+                onClick={() => handleSubmit(value)}
+              >
+                Submit your answer!
+              </Button>
             </Stack>
           </RadioGroup>
-          <Stack
-            spacing={{ base: 4, sm: 6 }}
-            direction={{ base: "column", sm: "row" }}
-          >
-            <Button
-              rounded={"full"}
-              size={"lg"}
-              fontWeight={"normal"}
-              px={6}
-              colorScheme={"blue"}
-              bg={"blue.400"}
-              _hover={{ bg: "blue.500" }}
-              // onClick={}
-            >
-              Submit your answer!{" "}
-            </Button>
-          </Stack>{" "}
-          <Heading as="h2" size="lg" mt={6} color="blue.500">
-            Why?
-            <h3>{testQuestion.explanation}</h3>
-          </Heading>
-          {/* replace with a explanation card that contains links to other resources  <TeamMemberCards /> */}
         </Stack>
       </Box>
     </ChakraProvider>
