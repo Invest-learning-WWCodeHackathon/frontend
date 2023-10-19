@@ -13,7 +13,6 @@ import {
   Container,
   Button,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
 
 const customTheme = extendTheme({
   // Define your custom theme, including the blue color scheme.
@@ -112,8 +111,21 @@ function QuizzesPage() {
             >
               Quizzes{" "}
             </Text>
-            <br />
           </Heading>
+          <Text
+            as={"span"}
+            position={"left"}
+            _after={{
+              content: "''",
+              width: "full",
+              height: "30%",
+              position: "absolute",
+              bottom: 1,
+              left: 0,
+            }}
+          >
+            {testQuestion.question}
+          </Text>
           <RadioGroup size="lg" colorScheme="blue">
             <Stack>
               {questions_formated.map((question) => {
