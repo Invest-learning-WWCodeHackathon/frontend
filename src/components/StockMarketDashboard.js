@@ -6,26 +6,22 @@ import {
     Box,
     Heading,
     Text,
-    extendTheme,
     CSSReset,
     Stack,
     Container,
-    useColorModeValue,
     Link,
     Button
   } from "@chakra-ui/react";
 
 function Dashboard() {
-    const { isLoading, isAuthorized, username } = useCurrentUser();
+    const { isLoading, isAuthorized } = useCurrentUser();
 
     if (isLoading) {
         return null;
     }
     const authorizedBody =
         <>
-            <Container>
-                <SidebarWithHeader />
-            </Container>
+            <SidebarWithHeader />
         </>
 
     const unauthorizedBody =
