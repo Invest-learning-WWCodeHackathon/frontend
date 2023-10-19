@@ -9,41 +9,68 @@ import {
     Thead,
     Tbody,
     TableContainer,
-    useColorModeValue
-} from '@chakra-ui/react';
+    useColorModeValue,
+    ChakraProvider,
+    Heading,
+    Text,
+    CSSReset,
+    Stack,
+    Link,
+    Button
+  } from "@chakra-ui/react";
 
 const stockData = [
-    { name: 'Apple', stocksowned: '2', Price: 232.4 },
-    { name: 'Microsoft', stocksowned: '1', Price: 320.48 },
-    { name: 'Oracle', stocksowned: '5', Price: 423.4 },
+    { name: 'Apple', symbol:'AAPL', stocksowned: '2', Price: 232.4 },
+    { name: 'Microsoft', symbol:'MSFT', stocksowned: '1', Price: 320.48 },
+    { name: 'Oracle', symbol:'ORCL', stocksowned: '5', Price: 423.4 },
 ];
 
 export default function StocksOwnedTable() {
+    const noStocks =
+        <>
+            <ChakraProvider>
+                <CSSReset />
+                <Box p={3} m={5} pt={5} height={'60vh'}>
+                    <Stack spacing={4} as={Container} maxW={'5xl'} textAlign={'center'}>
+                        <Text p={5} m={5} color={'gray.500'} fontSize={{ base: 'sm', sm: 'lg' }}>
+                            You have no stocks yet!
+                        </Text>
+                    </Stack>
+                </Box>
+            </ChakraProvider>
+            <br /><br />
+        </>
+    const tableHeaderColor = useColorModeValue('gray.600', 'white');
+    const tableHeaderBg = useColorModeValue('gray.300', 'gray.600');
     return (
         <Box p={4}>
             <Container maxW={'5xl'} mt={6}>
-                <TableContainer>
-                    <Table variant='simple'>
-                        <Thead bg={useColorModeValue('blue.200', 'blue.600')}>
-                            <Tr>
-                                <Th color={useColorModeValue('gray.600', 'white')} >Name</Th>
-                                <Th color={useColorModeValue('gray.600', 'white')} isNumeric>Stocks Owned</Th>
-                                <Th color={useColorModeValue('gray.600', 'white')} isNumeric>Price</Th>
-                                <Th color={useColorModeValue('gray.600', 'white')} isNumeric>Your Share</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {stockData.map((item, index) => (
-                                <Tr key={index}>
-                                    <Td>{item.name}</Td>
-                                    <Td isNumeric>{item.stocksowned}</Td>
-                                    <Td isNumeric>{item.Price}</Td>
-                                    <Td isNumeric>{item.Price * item.stocksowned}</Td>
+                {
+                    (stockData.length === 0 ) ? noStocks : 
+                    <TableContainer>
+                        <Table variant='simple'>
+                            <Thead bg={tableHeaderBg}>
+                                <Tr>
+                                    <Th color={tableHeaderColor} >Name</Th>
+                                    <Th color={tableHeaderColor} isNumeric>Shars</Th>
+                                    <Th color={tableHeaderColor} isNumeric>Price</Th>
+                                    <Th color={tableHeaderColor} isNumeric>Equity</Th>
                                 </Tr>
-                            ))}
-                        </Tbody>
-                    </Table>
-                </TableContainer>
+                            </Thead>
+                            <Tbody>
+                                {stockData.map((item, index) => (
+                                    <Tr key={index}>
+                                        <Td>{item.name} ( {item.symbol} )</Td>
+                                        <Td isNumeric>{item.stocksowned}</Td>
+                                        <Td isNumeric>${item.Price}</Td>
+                                        <Td isNumeric>${item.Price * item.stocksowned}</Td>
+                                    </Tr>
+                                ))}
+                            </Tbody>
+                        </Table>
+                    </TableContainer>
+                }
+                
             </Container>
         </Box>
     );
