@@ -16,7 +16,8 @@ import {
     CSSReset,
     Stack,
     Link,
-    Button
+    Button,
+    ButtonGroup
   } from "@chakra-ui/react";
 
 const stockData = [
@@ -55,6 +56,8 @@ export default function StocksOwnedTable() {
                                     <Th color={tableHeaderColor} isNumeric>Shares</Th>
                                     <Th color={tableHeaderColor} isNumeric>Price</Th>
                                     <Th color={tableHeaderColor} isNumeric>Equity</Th>
+                                    <Th color={tableHeaderColor} isNumeric></Th>
+                                    
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -64,6 +67,12 @@ export default function StocksOwnedTable() {
                                         <Td isNumeric>{item.stocksowned}</Td>
                                         <Td isNumeric>${item.Price}</Td>
                                         <Td isNumeric>${item.Price * item.stocksowned}</Td>
+                                        <Td>
+                                        <ButtonGroup variant='outline' spacing='2'>
+                                            <Button colorScheme='green'>Buy</Button>
+                                            <Button colorScheme='red'>Trade</Button>
+                                        </ButtonGroup>
+                                        </Td>
                                     </Tr>
                                 ))}
                             </Tbody>

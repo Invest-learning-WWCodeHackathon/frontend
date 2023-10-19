@@ -55,7 +55,7 @@ export default function DashboardHome() {
     return (
         <Box p={4}>
 
-            <Container maxW={'5xl'} mt={12}>
+            <Container maxW={'5xl'} mt={2}>
                 <Flex flexWrap="wrap" gridGap={6} justify="center" mb={14}>
                     <Card
                         heading={'Account Balance'}
