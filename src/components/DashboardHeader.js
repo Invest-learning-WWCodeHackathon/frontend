@@ -35,41 +35,6 @@ import ExploreContent from './ExploreContent'; // Replace with the actual path t
 import SignOutButton from './SignOutButton'; // Import SignOutButton if it's defined
 import useCurrentUser from '../hooks/useCurrectUser';
 
-// const LinkItems = [
-//   { name: 'Home', icon: FiHome },
-//   { name: 'Trending', icon: FiTrendingUp },
-//   { name: 'Explore', icon: FiCompass },
-//   { name: 'Favourites', icon: FiStar },
-//   { name: 'Settings', icon: FiSettings },
-// ];
-
-// const SidebarContent = ({ onClose, setSelectedLink, ...rest }) => {
-//   return (
-//     <Box
-//       transition="3s ease"
-//       bg={useColorModeValue('white', 'gray.900')}
-//       borderRight="1px"
-//       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-//       w={{ base: 'full', md: 60 }}
-//       pos="absolute"
-//       h="100vh"
-//       {...rest}
-//     >
-//       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-//         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" color={'blue.400'}>
-//           Dashboard
-//         </Text>
-//         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
-//       </Flex>
-//       {LinkItems.map((link) => (
-//         <NavItem key={link.name} icon={link.icon} onSelect={() => setSelectedLink(link.name)}>
-//           {link.name}
-//         </NavItem>
-//       ))}
-//     </Box>
-//   );
-// };
-
 const NavItem = ({ icon, children, onSelect, ...rest }) => {
   return (
     <Box
@@ -215,7 +180,7 @@ const SidebarWithHeader = () => {
           <CloseButton display={{ base: 'flex', md: 'none' }} onClick={() => onClose} />
         </Flex>
         {LinkItems.map((link) => (
-          <NavItem key={link.name} icon={link.icon} onSelect={() => setSelectedLink(link.name)}>
+          <NavItem bg={link.name === selectedLink ? 'blue.200' : ''} key={link.name} icon={link.icon} onSelect={() => setSelectedLink(link.name)}>
             {link.name}
           </NavItem>
         ))}
@@ -229,7 +194,6 @@ const SidebarWithHeader = () => {
         size="full"
       >
         <DrawerContent>
-          {/* <SidebarContent onClose={onClose} setSelectedLink={setSelectedLink} /> */}
           <Box
             transition="3s ease"
             bg={useColorModeValue('white', 'gray.900')}
@@ -238,7 +202,6 @@ const SidebarWithHeader = () => {
             w={{ base: 'full', md: 60 }}
             pos="absolute"
             h="100vh"
-          // display={{ base: 'none', md: 'block' }}
           >
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
               <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" color={'blue.400'}>
