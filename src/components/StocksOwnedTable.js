@@ -52,7 +52,7 @@ export default function StocksOwnedTable() {
                             <Thead bg={tableHeaderBg}>
                                 <Tr>
                                     <Th color={tableHeaderColor} >Name</Th>
-                                    <Th color={tableHeaderColor} isNumeric>Shars</Th>
+                                    <Th color={tableHeaderColor} isNumeric>Shares</Th>
                                     <Th color={tableHeaderColor} isNumeric>Price</Th>
                                     <Th color={tableHeaderColor} isNumeric>Equity</Th>
                                 </Tr>
