@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Stack, Text, Button, Container, ChakraProvider, CSSReset, Box, Heading, Image, useColorModeValue, Link } from '@chakra-ui/react'
+import { Stack, Text, Button, Container, ChakraProvider, CSSReset, Box, Heading, Image, useColorModeValue, Link, Center, Spinner } from '@chakra-ui/react'
 // import { Card } from 'react-bootstrap'
 
 const NewsCard = ({ title, description, image, author, url }) => {
   return (
-    <Stack p="4" bg={useColorModeValue('white', 'gray.900')} boxShadow="lg" m="4"  borderRadius="sm" rounded="lg" direction={{ base: 'column', md: 'row' }} alignItems="center" overflow='hidden'>
+    <Stack p="4" bg={useColorModeValue('white', 'gray.900')} boxShadow="lg" m="4" borderRadius="sm" rounded="lg" direction={{ base: 'column', md: 'row' }} alignItems="center" overflow='hidden'>
       <Stack flex="7" direction="column" alignItems="flex-start" spacing="4" maxW={{ base: '100%', md: '70%' }}>
 
         <Box>
@@ -27,7 +27,6 @@ const NewsCard = ({ title, description, image, author, url }) => {
 
       </Stack>
 
-      {/* <Image flex="3" w="50px" h="100px" src={image} alt="News Article" rounded="lg" /> */}
       <Image flex="3" boxSize='180px' src={image} alt="News Article" rounded="lg" />
     </Stack>
 
@@ -37,11 +36,13 @@ const NewsCard = ({ title, description, image, author, url }) => {
 export default function News() {
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
   const [newsArticles, setNewsArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const fetchNews = async () => {
     const res = await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`);
     const data = await res.json();
     console.log(data);
-    setNewsArticles(data.articles)
+    setNewsArticles(data.articles);
+    setIsLoading(false);
   }
   useEffect(() => {
     fetchNews();
@@ -60,11 +61,23 @@ export default function News() {
         </Stack>
         <Container maxW='5xl' centerContent>
           <Box padding='4' color='black' >
-          {
+            {isLoading ? ( 
+              <>
+              <Center bg='' h='60vh' color='white'>
+              <Spinner
+                      thickness='4px'
+                      speed='0.65s'
+                      emptyColor='gray.200'
+                      color='blue.500'
+                      size='xl'
+                  />
+              </Center>
+              </>
+            ) : (
               newsArticles.map((article) => (
                 <NewsCard title={article.title} description={article.description} image={article.urlToImage} author={article.author} url={article.url} />
               ))
-            }
+            )}
           </Box>
         </Container>
 

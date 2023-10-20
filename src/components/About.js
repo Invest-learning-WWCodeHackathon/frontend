@@ -67,7 +67,7 @@ function AboutPage() {
             together, where learning about finance is not just a necessity, but a 
             thrilling expedition full of knowledge, confidence, and opportunities.
           </Text>
-          <Heading as="h2" size="lg" mt={6} color="blue.500">
+          <Heading as="h2" size="lg" mt={6} color="blue.500" p={5} mb={10}>
             Our Team
           </Heading>
           <TeamMemberCards />

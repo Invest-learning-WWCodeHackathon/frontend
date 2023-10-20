@@ -10,14 +10,27 @@ import {
     Stack,
     Container,
     Link,
-    Button
+    Button,
+    Spinner,
+    Center
   } from "@chakra-ui/react";
 
 function Dashboard() {
     const { isLoading, isAuthorized } = useCurrentUser();
+    const loader = <>
+    <Center bg='' h='100vh' color='white'>
+    <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+        />
+    </Center>
+    </>
 
     if (isLoading) {
-        return null;
+        return loader;
     }
     const authorizedBody =
         <>

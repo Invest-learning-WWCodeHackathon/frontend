@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import "@passageidentity/passage-elements/passage-auth";
 
 function Auth() {
@@ -7,7 +8,9 @@ function Auth() {
     }
 
     return (
-        <passage-auth app-id={process.env.REACT_APP_PASSAGE_APP_ID}></passage-auth>
+        <Box padding='4' color='black' h='80vh' mt={8} >
+            <passage-auth app-id={process.env.REACT_APP_PASSAGE_APP_ID}></passage-auth>
+        </Box>
     );
 }
 

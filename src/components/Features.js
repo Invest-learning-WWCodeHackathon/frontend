@@ -60,7 +60,7 @@ const Card = ({ heading, description, icon, href }) => {
 
 export default function Features() {
   return (
-    <Box p={4}>
+    <Box p={4} pb={14}>
       <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
         <Heading
           color="blue.500"
