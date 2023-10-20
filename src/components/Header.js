@@ -301,6 +301,7 @@ const NAV_ITEMS = [
   },
   {
     label: "E - Learning",
+    href: "/elearning"
   },
   {
     label: "Quizzes",

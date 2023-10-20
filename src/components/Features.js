@@ -110,7 +110,7 @@ export default function Features() {
             description={
               "Access a vast library of e-learning courses to enhance your stock market skills."
             }
-            href={"#"}
+            href={"/elearning"}
           />
           <Card
             heading={"News"}

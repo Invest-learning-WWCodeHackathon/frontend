@@ -8,6 +8,7 @@ import AboutPage from "./About";
 import Dashboard from "./StockMarketDashboard";
 import Auth from "./Auth";
 import News from "./News";
+import ELearning from "./ELearning";
 
 function AppRouter() {
   return (
@@ -20,6 +21,7 @@ function AppRouter() {
         <Route path="/quizzes" element={<Quizzes />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/news" element={<News/> } />
+        <Route path="/elearning" element={<ELearning/> } />
       </Routes>
       <Footer />
     </BrowserRouter>
