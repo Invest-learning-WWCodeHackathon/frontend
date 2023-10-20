@@ -1,19 +1,21 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Stack, Text, Button, Container, ChakraProvider, CSSReset, Box, Heading, Center, Image, Avatar, useColorModeValue, Link, Card, CardBody, CardFooter } from '@chakra-ui/react'
+import { Stack, Text, Button, Container, ChakraProvider, CSSReset, Box, Heading, Image, useColorModeValue, Link } from '@chakra-ui/react'
 // import { Card } from 'react-bootstrap'
 
 const NewsCard = ({ title, description, image, author, url }) => {
   return (
-    <Stack p="4" boxShadow="lg" m="4" borderRadius="sm" rounded="lg" direction={{ base: 'column', md: 'row' }} alignItems="center" overflow='hidden'>
+    <Stack p="4" bg={useColorModeValue('white', 'gray.900')} boxShadow="lg" m="4"  borderRadius="sm" rounded="lg" direction={{ base: 'column', md: 'row' }} alignItems="center" overflow='hidden'>
       <Stack flex="7" direction="column" alignItems="flex-start" spacing="4" maxW={{ base: '100%', md: '70%' }}>
 
         <Box>
-          <Heading size='md' fontWeight="semibold">{title}</Heading>
-          <Text>by {author}</Text>
+          <Heading size='md' fontWeight="semibold">
+            <Text color={useColorModeValue("", "white")}>{title}</Text>
+          </Heading>
+          <Text color={useColorModeValue("", "white")}>by {author}</Text>
         </Box>
-        <Text fontSize="sm" textAlign="left" maxW="4xl">
+        <Text color={useColorModeValue("", "white")} fontSize="sm" textAlign="left" maxW="4xl">
           {description}
         </Text>
 

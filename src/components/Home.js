@@ -1,12 +1,12 @@
-import { Container } from 'react-bootstrap';
 import Hero from './Hero';
 import Features from './Features';
+import { Container } from '@chakra-ui/react';
 
 
 function Home() {
 
     return (
-            <Container>
+            <Container maxW={"100%"}>
                 <Hero/>
                 <Features/>
             </Container>
