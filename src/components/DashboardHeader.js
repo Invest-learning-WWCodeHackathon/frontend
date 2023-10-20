@@ -3,43 +3,30 @@
 import React, { useState } from 'react';
 import {
   IconButton,
-  Avatar,
   Box,
   CloseButton,
   Flex,
-  HStack,
-  VStack,
   Icon,
   useColorModeValue,
   Text,
   Drawer,
   DrawerContent,
   useDisclosure,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
 } from '@chakra-ui/react';
 import {
   FiHome,
   FiTrendingUp,
   FiCompass,
   FiStar,
-  FiSettings,
   FiMenu,
-  FiChevronDown,
 } from 'react-icons/fi';
 import DashboardHome from './DashboardHome'; // Replace with the actual path to DashboardHome component
 import ExploreContent from './ExploreContent'; // Replace with the actual path to ExploreContent component
-import SignOutButton from './SignOutButton'; // Import SignOutButton if it's defined
-import useCurrentUser from '../hooks/useCurrectUser';
 
 const NavItem = ({ icon, children, onSelect, ...rest }) => {
   return (
     <Box
       as="a"
-      // href="#"
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}
       onClick={() => onSelect(children)}
@@ -74,12 +61,11 @@ const NavItem = ({ icon, children, onSelect, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
-  const { username } = useCurrentUser();
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 4 }}
-      height="20"
+      // height="20"
       alignItems="center"
       bg={useColorModeValue('white', 'gray.900')}
       borderBottomWidth="1px"
@@ -105,36 +91,6 @@ const MobileNav = ({ onOpen, ...rest }) => {
         Dashboard
       </Text>
 
-      <HStack spacing={{ base: '0', md: '6' }}>
-        <Flex alignItems={'center'}>
-          <Menu>
-            <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
-              <HStack>
-              <Avatar size={'sm'} bg='blue.300' />
-                <VStack
-                  display={{ base: 'none', md: 'flex' }}
-                  alignItems="flex-start"
-                  spacing="1px"
-                  ml="2"
-                >
-                  {/* <Text pt={'3'} fontSize="sm">{username}</Text> */}
-                </VStack>
-                <Box display={{ base: 'none', md: 'flex' }}>
-                  <FiChevronDown />
-                </Box>
-              </HStack>
-            </MenuButton>
-            <MenuList
-              bg={useColorModeValue('white', 'gray.900')}
-              borderColor={useColorModeValue('gray.200', 'gray.700')}
-            >
-              <MenuItem>
-                <SignOutButton />
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </Flex>
-      </HStack>
     </Flex>
   );
 };
@@ -145,14 +101,13 @@ const SidebarWithHeader = () => {
     { name: 'Trending', icon: FiTrendingUp, active: false },
     { name: 'Explore', icon: FiCompass, active: false },
     { name: 'Favourites', icon: FiStar, active: false },
-    // { name: 'Settings', icon: FiSettings, active: false },
   ]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedLink, setSelectedLink] = useState('Home');
   console.log(selectedLink);
 
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH="100vh" bg={useColorModeValue('white', 'gray.900')}>
       <Box
         transition="3s ease"
         bg={useColorModeValue('white', 'gray.900')}

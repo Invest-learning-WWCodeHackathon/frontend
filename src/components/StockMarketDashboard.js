@@ -28,8 +28,8 @@ function Dashboard() {
         <>
             <ChakraProvider>
                 <CSSReset />
-                <Box p={3} m={5} pt={5} height={'60vh'}>
-                    <Stack spacing={4} as={Container} maxW={'5xl'} textAlign={'center'}>
+                <Box p={3} m={5} pt={5} height={'80vh'}>
+                    <Stack spacing={4} as={Container} maxW={'5xl'} textAlign={'center'} >
                     <Heading m={5}
                         lineHeight={1.1}
                         fontWeight={600}
@@ -51,7 +51,7 @@ function Dashboard() {
                         </Text>
                         <br />
                     </Heading>
-                    <Text p={5} m={5} color={'gray.500'} fontSize={{ base: 'sm', sm: 'lg' }}>
+                    <Text p={5} m={5} mt={14} color={'gray.500'} fontSize={{ base: 'sm', sm: 'lg' }}>
                         Please log in to access the dashboard.
                     </Text>
                     <Link href={"/sign-up"}>

@@ -4,14 +4,13 @@ import { PassageUser } from '@passageidentity/passage-elements/passage-user';
 
 const SignOutButton = () => {
   const navigate = useNavigate(); 
-
   const handleSignOut = async () => {
     try {
       const user = new PassageUser();
       const value = await user.signOut();
       if (value) {
-        console.log("Logged out");
         navigate('/'); 
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error while signing out:", error);
