@@ -20,7 +20,7 @@ function AboutPage() {
     <ChakraProvider>
       <CSSReset />
       <Box p={3} m={5} pt={5}>
-        <Stack spacing={4} as={Container} maxW={'5xl'} textAlign={'center'}>
+        <Stack spacing={4} as={Container} maxW={'6xl'} textAlign={'center'}>
           <Heading m={5}
             lineHeight={1.1}
             fontWeight={600}

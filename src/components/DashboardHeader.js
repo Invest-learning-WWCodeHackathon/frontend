@@ -117,7 +117,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text pt={'3'} fontSize="sm">{username}</Text>
+                  {/* <Text pt={'3'} fontSize="sm">{username}</Text> */}
                 </VStack>
                 <Box display={{ base: 'none', md: 'flex' }}>
                   <FiChevronDown />
