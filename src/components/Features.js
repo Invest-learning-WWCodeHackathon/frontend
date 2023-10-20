@@ -118,7 +118,7 @@ export default function Features() {
             description={
               "Stay informed with the latest stock market news and trends."
             }
-            href={"#"}
+            href={"/news"}
           />
         </Flex>
       </Container>

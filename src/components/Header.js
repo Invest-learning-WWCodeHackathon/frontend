@@ -282,6 +282,6 @@ const NAV_ITEMS = [
   },
   {
     label: "News",
-    href: "#",
+    href: "/news",
   },
 ];

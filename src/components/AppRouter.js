@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import AboutPage from "./About";
 import Dashboard from "./StockMarketDashboard";
 import Auth from "./Auth";
+import News from "./News";
 
 function AppRouter() {
   return (
@@ -18,6 +19,7 @@ function AppRouter() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/quizzes" element={<Quizzes />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/news" element={<News/> } />
       </Routes>
       <Footer />
     </BrowserRouter>
