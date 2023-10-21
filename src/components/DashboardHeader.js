@@ -104,7 +104,6 @@ const SidebarWithHeader = () => {
   ]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedLink, setSelectedLink] = useState('Home');
-  console.log(selectedLink);
 
   return (
     <Box minH="100vh" bg={useColorModeValue('white', 'gray.900')}>
@@ -125,7 +124,7 @@ const SidebarWithHeader = () => {
           <CloseButton display={{ base: 'flex', md: 'none' }} onClick={() => onClose} />
         </Flex>
         {LinkItems.map((link) => (
-          <NavItem bg={link.name === selectedLink ? 'blue.200' : ''} key={link.name} icon={link.icon} onSelect={() => setSelectedLink(link.name)}>
+          <NavItem bg={link.name === selectedLink ? 'blue.300' : ''} key={link.name} icon={link.icon} onSelect={() => setSelectedLink(link.name)}>
             {link.name}
           </NavItem>
         ))}

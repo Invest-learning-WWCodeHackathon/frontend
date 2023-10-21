@@ -17,8 +17,10 @@ import {
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons'
 
 const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
+    const handleBuyStock = () =>{
+    }
     return (
-        <Box bg={useColorModeValue('gray.300', 'gray.600')} p='3' m='6' borderRadius={12}>
+        <Box bg={useColorModeValue('gray.100', 'gray.800')} p='3' m='6' borderRadius={12}>
             <Flex  alignItems='center' >
                 <Box p='2'>
                     <Heading size='md'>{symbol}</Heading>
@@ -33,7 +35,7 @@ const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
                 <ArrowDownIcon color={'red'}/>
                 <Box p="2" color={'red'}>${dayLow}</Box>
                 <Spacer />
-                <Button colorScheme='teal'>Buy</Button>
+                <Button colorScheme='teal' onClick={()=>handleBuyStock()}>Buy</Button>
             </Flex>
         </Box>
     )
