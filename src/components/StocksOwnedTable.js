@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Container,
@@ -11,22 +11,16 @@ import {
     TableContainer,
     useColorModeValue,
     ChakraProvider,
-    Heading,
     Text,
     CSSReset,
     Stack,
-    Link,
     Button,
     ButtonGroup
   } from "@chakra-ui/react";
 
-const stockData = [
-    { name: 'Apple', symbol:'AAPL', stocksowned: '2', Price: 232.4 },
-    { name: 'Microsoft', symbol:'MSFT', stocksowned: '1', Price: 320.48 },
-    { name: 'Oracle', symbol:'ORCL', stocksowned: '5', Price: 423.4 },
-];
-
 export default function StocksOwnedTable() {
+    const [stockData, setStockData] = useState(JSON.parse(localStorage.getItem('stockData')) || []);
+    localStorage.setItem('stockData', JSON.stringify(stockData));
     const noStocks =
         <>
             <ChakraProvider>
@@ -43,6 +37,10 @@ export default function StocksOwnedTable() {
         </>
     const tableHeaderColor = useColorModeValue('gray.600', 'white');
     const tableHeaderBg = useColorModeValue('gray.300', 'gray.600');
+    const handleBuy = (symbol) =>{
+
+    }
+
     return (
         <Box p={4}>
             <Container maxW={'5xl'} mt={6}>
@@ -69,7 +67,7 @@ export default function StocksOwnedTable() {
                                         <Td isNumeric>${item.Price * item.stocksowned}</Td>
                                         <Td>
                                         <ButtonGroup variant='outline' spacing='2'>
-                                            <Button colorScheme='green'>Buy</Button>
+                                            <Button colorScheme='green' onClick={()=>{ handleBuy(item.symbol) }}>Buy</Button>
                                             <Button colorScheme='red'>Trade</Button>
                                         </ButtonGroup>
                                         </Td>

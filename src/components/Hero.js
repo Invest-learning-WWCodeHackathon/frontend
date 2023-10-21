@@ -6,6 +6,9 @@ import {
 } from '@chakra-ui/react'
 import HeroImage from "../assests/Hero.jpeg"
 
+// const stockData = (localStorage.getItem('stockData')) ? localStorage.getItem('stockData')  : [];
+// localStorage.setItem('stockData', JSON.stringify([]));
+
 export default function Hero() {
   return (
     <Container maxW={'7xl'}>

@@ -1,5 +1,6 @@
 "use client";
 
+// a page to show stats/ knowledge hub
 import {
   Box,
   Button,
