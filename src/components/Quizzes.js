@@ -69,7 +69,7 @@ function QuizzesPage() {
         title: `Correct! It is ${userAnswer}!`,
         description: `\nWhy? ${question.explanation}`,
         status: "success",
-        duration: 4000,
+        duration: 5000,
         position: "top",
         containerStyle: {
           width: "800px",
