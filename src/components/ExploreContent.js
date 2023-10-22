@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Box,
     Button,
@@ -11,10 +11,13 @@ import {
     Spacer,
     useColorModeValue,
     Center,
-    useToast
+    useToast,
+    Spinner
 } from '@chakra-ui/react'
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons'
-import { Spinner } from 'react-bootstrap';
+import { StockChart } from './StockChart';
+
+
 
 const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
     const toast = useToast();
@@ -32,15 +35,15 @@ const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
             stockAlreadyExists = stockData.some((stock) => stock.symbol === symbol);
         }
 
-        if(stockAlreadyExists){
+        if (stockAlreadyExists) {
             toast({
                 title: "Stock Exists",
                 description: `You already own ${name}`,
                 status: 'success',
                 duration: 5000,
                 isClosable: true,
-              })
-        } else{
+            })
+        } else {
             const updatedStockData = [...stockData, purchasedStock];
             const updatedStockDataJSON = JSON.stringify(updatedStockData);
             localStorage.setItem('stockData', updatedStockDataJSON);
@@ -52,34 +55,34 @@ const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
                 isClosable: true,
             })
         }
-        
+
         // StockToast("Stock Added", `We have added ${name} stock to your account`);
     }
+
     return (
         <Box bg={useColorModeValue('gray.100', 'gray.800')} p='3' m='6' borderRadius={12}>
             <Flex alignItems='center' >
                 <Box p='2'>
                     <Heading size='md'>{symbol}</Heading>
                     <Text>{name}</Text>
+                    <Box p="">${price}</Box>
+
                 </Box>
                 <Spacer />
-                <Box p="2">${price}</Box>
-                <Spacer />
-                <ArrowUpIcon color={'green'} />
+                {/* <ArrowUpIcon color={'green'} />
                 <Box p="2" color={'green'}>${dayHigh}</Box>
                 <Spacer />
                 <ArrowDownIcon color={'red'} />
-                <Box p="2" color={'red'}>${dayLow}</Box>
+                <Box p="2" color={'red'}>${dayLow}</Box> */}
+                <StockChart/>
                 <Spacer />
-                <Button colorScheme='teal' onClick={() => handleBuyStock(symbol, name, price)}>Buy</Button>
+                <Button colorScheme='green' onClick={() => handleBuyStock(symbol, name, price)}>Buy</Button>
+                <Spacer />
             </Flex>
         </Box>
     )
 
 }
-
-
-
 
 export default function ExploreContent() {
     const [stocks, setStocks] = useState([]);
@@ -93,8 +96,10 @@ export default function ExploreContent() {
         // console.log(stocks.length)
     }, []);
     return (
+        
         <Box p={4}>
-            {   
+            
+            {
                 (stocks?.length == 0) ?
                     <Center bg='' h='60vh' color='blue.500'>
                         <Spinner
@@ -107,7 +112,7 @@ export default function ExploreContent() {
                         />
                     </Center>
                     :
-                    stocks?.map((stock) => (
+                    stocks?.map((stock, index) => (
                         <Container maxW={'3xl'} key={stock.ticker}>
                             <StockCard symbol={stock.ticker} name={stock.companyName} price={stock.price} dayHigh={stock.dayHigh} dayLow={stock.dayLow} />
                         </Container>
