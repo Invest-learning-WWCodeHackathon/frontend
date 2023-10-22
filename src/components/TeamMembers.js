@@ -10,6 +10,8 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
+import Pradnya from "../assests/Pradnya.jpg";
+
 // Define an array of team members with their information
 const teamMembers = [
   {
@@ -28,7 +30,7 @@ const teamMembers = [
     id: 3,
     name: 'Pradnya Bhukan',
     role: 'Front-end developer',
-    photo: 'john-doe-photo.jpg',
+    photo: Pradnya,
   },
   {
     id: 4,
