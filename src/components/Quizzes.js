@@ -12,7 +12,9 @@ import {
   Heading,
   Container,
   Button,
+  Link
 } from "@chakra-ui/react";
+import useCurrentUser from "../hooks/useCurrectUser";
 
 // https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion
 
@@ -95,8 +97,11 @@ function QuizzesPage() {
     onChange: handleChange,
   });
 
-  return (
-    <ChakraProvider theme={customTheme}>
+  //added authorized body and unauthorized body
+  const { isAuthorized } = useCurrentUser();
+  const quizAuthorizedBody = 
+  <>
+  <ChakraProvider theme={customTheme}>
       <CSSReset />
       <Box p={3} m={5} pt={5}>
         <Stack spacing={4} as={Container} maxW={"5xl"} textAlign={"center"}>
@@ -169,6 +174,55 @@ function QuizzesPage() {
         </Stack>
       </Box>
     </ChakraProvider>
+  </>
+  const quizUnauthorizedBody =
+        <>
+            <ChakraProvider>
+                <CSSReset />
+                <Box p={3} m={5} pt={5} height={'80vh'}>
+                    <Stack spacing={4} as={Container} maxW={'5xl'} textAlign={'center'} >
+                    <Heading m={5}
+                        lineHeight={1.1}
+                        fontWeight={600}
+                        fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}>
+                        <Text
+                        as={'span'}
+                        position={'relative'}
+                        _after={{
+                            content: "''",
+                            width: 'full',
+                            height: '30%',
+                            position: 'absolute',
+                            bottom: 1,
+                            left: 0,
+                            bg: 'blue.400',
+                            zIndex: -1,
+                        }} >
+                        Dough Dynasty
+                        </Text>
+                        <br />
+                    </Heading>
+                    <Text p={5} m={5} mt={14} color={'gray.500'} fontSize={{ base: 'sm', sm: 'lg' }}>
+                        Please log in to access the Quizzes.
+                    </Text>
+                    <Link href={"/sign-up"}>
+                        <Button colorScheme={"blue"} size={"sm"}>
+                            Sign in to continue
+                        </Button>
+                    </Link>
+                    </Stack>
+                </Box>
+            </ChakraProvider>
+            <br /><br />
+        </>
+
+  return (
+    <div>
+            <div >
+                {isAuthorized ? quizAuthorizedBody : quizUnauthorizedBody}
+            </div>
+    </div>
+    
   );
 }
 
