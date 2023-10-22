@@ -22,11 +22,11 @@ const sort_array = ["option1", "option2", "option3", "answer"];
 
 shuffleArray(sort_array);
 
-const QuizQuestion = [
+const Question = [
   { option: testQuestion.sort_array[0] },
   { option: testQuestion.sort_array[1] },
   { option: testQuestion.sort_array[2] },
   { option: testQuestion.sort_array[3] },
 ];
 
-export { QuizQuestion };
+export { Question };

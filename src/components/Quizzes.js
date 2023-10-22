@@ -15,9 +15,9 @@ import {
   Link,
 } from "@chakra-ui/react";
 import useCurrentUser from "../hooks/useCurrectUser";
-// import React, { useState } from "react";
-// import { QuizQuestion } from "./Question";
-// console.log(QuizQuestion);
+import React, { useState, useEffect } from "react";
+// import { Question } from "./Question";
+// console.log(Question);
 // https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion
 
 const customTheme = extendTheme({
@@ -28,24 +28,32 @@ const customTheme = extendTheme({
 function QuizzesPage() {
   const toast = useToast();
 
-  const testQuestion = {
-    question: "What is the difference between saving and investing?",
-    option1:
-      "xxxSaving is putting money aside for short-term goals, while investing is putting money into assets with the potential for long-term growth.",
-    option2:
-      "Saving is putting money into assets with the potential for long-term growth, while investing is putting money aside for short-term goals.",
-    option3: "There is no difference between saving and investing.",
-    answer:
-      "Saving is putting money aside for short-term goals, while investing is putting money into assets with the potential for long-term growth.",
-    explanation:
-      "Saving involves setting aside money for short-term goals such as emergencies or specific purchases. Investing, on the other hand, involves putting money into assets such as stocks or mutual funds with the potential for long-term growth and higher returns over time.",
+  const [currentQuestion, setcurrentQuestion] = useState({
+    question: "Loading your next question",
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [questionAnswered, setQuestionAnwered] = useState(false);
+
+  const fetchQuestion = async () => {
+    console.log("fetchQuestion running");
+    const res = await fetch(
+      `https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion`
+    );
+    const data = await res.json();
+    setcurrentQuestion(data);
+    console.log(data);
+    setIsLoading(false);
+    setQuestionAnwered(false);
   };
+  useEffect(() => {
+    fetchQuestion();
+  }, [questionAnswered]);
 
   const options_array = [
-    { option: testQuestion.option1 },
-    { option: testQuestion.option2 },
-    { option: testQuestion.option3 },
-    { option: testQuestion.answer },
+    { option: currentQuestion.option1 },
+    { option: currentQuestion.option2 },
+    { option: currentQuestion.option3 },
+    { option: currentQuestion.answer },
   ];
 
   // stores the current selection
@@ -72,7 +80,7 @@ function QuizzesPage() {
       });
     else {
       return toast({
-        title: `Darn it is ${correctAnswer}`,
+        title: `Incorrect the answer is :  ${correctAnswer}`,
         description: `Why? ${question.explanation}`,
         status: "error",
         duration: 4000,
@@ -83,9 +91,10 @@ function QuizzesPage() {
         },
       });
     }
+    setQuestionAnwered(true);
   }
   const handleSubmit = (value) => {
-    givesAnswer(value, testQuestion);
+    givesAnswer(value, currentQuestion);
   };
 
   const { value, getRadioProps } = useRadioGroup({
@@ -136,7 +145,7 @@ function QuizzesPage() {
                 left: 0,
               }}
             >
-              {testQuestion.question}
+              {currentQuestion.question}
             </Text>
             <RadioGroup size="lg" colorScheme="blue">
               <Stack>
