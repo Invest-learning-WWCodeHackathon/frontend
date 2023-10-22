@@ -34,43 +34,40 @@ import {
 } from "@chakra-ui/react";
 
 export default function StocksOwnedTable() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [stockData, setStockData] = useState(JSON.parse(localStorage.getItem('stockData')) || []);
-    const [selectedAction, setSelectedAction] = useState('');
-    localStorage.setItem('stockData', JSON.stringify(stockData));
-
-    const [numberOfStocks, setnumberOfStocks] = useState(0);
-    const handleNumberChange = (e) => {
-        if (e && e.target) {
-            const newValue = e.target.value;
-            setnumberOfStocks(newValue);
-          }
-      };
-    const handle = (action) => {
-        setSelectedAction(action);
-        onOpen();
-      };
-
-    const noStocks =
-        <>
-            <ChakraProvider>
-                <CSSReset />
-                <Box p={3} m={5} pt={5} height={'60vh'}>
-                    <Stack spacing={4} as={Container} maxW={'5xl'} textAlign={'center'}>
-                        <Text p={5} m={5} color={'gray.500'} fontSize={{ base: 'sm', sm: 'lg' }}>
-                            You have no stocks yet!
-                        </Text>
-                    </Stack>
-                </Box>
-            </ChakraProvider>
-            <br /><br />
-        </>
+    const [selectedAction, setSelectedAction] = useState(''); // buy or sell
     const tableHeaderColor = useColorModeValue('gray.600', 'white');
     const tableHeaderBg = useColorModeValue('gray.300', 'gray.600');
-    const handleTrade = (symbol, number) => {
-        console.log(number)
+
+    localStorage.setItem('stockData', JSON.stringify(stockData));
+
+    const handle = (action) => {  //handle buy or sell clicked
+        setSelectedAction(action);
+        onOpen();
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("handle submit called!",selectedAction, e.target.num.value);
+        console.log(e);
+        onClose();
     }
 
+    const noStocks =
+    <>
+        <ChakraProvider>
+            <CSSReset />
+            <Box p={3} m={5} pt={5} height={'60vh'}>
+                <Stack spacing={4} as={Container} maxW={'5xl'} textAlign={'center'}>
+                    <Text p={5} m={5} color={'gray.500'} fontSize={{ base: 'sm', sm: 'lg' }}>
+                        You have no stocks yet!
+                    </Text>
+                </Stack>
+            </Box>
+        </ChakraProvider>
+        <br /><br />
+    </>
     return (
         <Box p={4}>
             <Container maxW={'5xl'} mt={6}>
@@ -100,36 +97,38 @@ export default function StocksOwnedTable() {
                                                     <Button colorScheme='green' onClick={() => handle('Buy')} >Buy</Button>
                                                     <Button colorScheme='red' onClick={() => handle('Trade')} >Trade</Button>
                                                 </ButtonGroup>
-                                                    <Modal isOpen={isOpen} onClose={onClose}>
-                                                        <ModalOverlay />
-                                                        <ModalContent>
-                                                            <ModalHeader>{item.symbol}</ModalHeader>
-                                                            <ModalCloseButton />
+                                                <Modal isOpen={isOpen} onClose={onClose}>
+                                                    <ModalOverlay />
+                                                    <ModalContent>
+                                                        <ModalHeader>{item.symbol}</ModalHeader>
+                                                        <ModalCloseButton />
+                                                        <form onSubmit={handleSubmit}>
+
                                                             <ModalBody>
-                                                            <FormControl>
-                                                                <FormLabel>Number of Stocks</FormLabel>
-                                                                <NumberInput min={0} value={numberOfStocks} onChange={handleNumberChange}>
-                                                                    <NumberInputField />
-                                                                    <NumberInputStepper>
-                                                                        <NumberIncrementStepper />
-                                                                        <NumberDecrementStepper />
-                                                                    </NumberInputStepper>
-                                                                </NumberInput>
-                                                            </FormControl>
+                                                                <FormControl >
+                                                                    <FormLabel>Number of Stocks</FormLabel>
+                                                                    <NumberInput min={0} id="num" >
+                                                                        <NumberInputField />
+                                                                        <NumberInputStepper>
+                                                                            <NumberIncrementStepper />
+                                                                            <NumberDecrementStepper />
+                                                                        </NumberInputStepper>
+                                                                    </NumberInput>
+                                                                </FormControl>
                                                             </ModalBody>
 
                                                             <ModalFooter>
                                                                 <Button colorScheme='blue' mr={3} onClick={onClose}> Close </Button>
                                                                 {
                                                                     (selectedAction === 'Buy') ?
-                                                                        <Button colorScheme='green' onClick={() => { handleTrade(item.symbol, numberOfStocks) }}>Buy</Button>
+                                                                        <Button colorScheme='green' type='submit'>Buy</Button>
                                                                         :
-                                                                        <Button colorScheme='red' onClick={() => { handleTrade(item.symbol, numberOfStocks) }}>Sell</Button>
-
+                                                                        <Button colorScheme='red' type='submit'>Sell</Button>
                                                                 }
                                                             </ModalFooter>
-                                                        </ModalContent>
-                                                    </Modal>
+                                                        </form>
+                                                    </ModalContent>
+                                                </Modal>
                                             </Td>
                                         </Tr>
                                     ))}
