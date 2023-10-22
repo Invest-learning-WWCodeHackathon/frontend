@@ -16,9 +16,6 @@ import {
 } from "@chakra-ui/react";
 import useCurrentUser from "../hooks/useCurrectUser";
 import React, { useState, useEffect } from "react";
-// import { Question } from "./Question";
-// console.log(Question);
-// https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion
 
 const customTheme = extendTheme({
   // Define your custom theme, including the blue color scheme.
@@ -33,6 +30,7 @@ function QuizzesPage() {
   });
   const [optionsArray, setoptionsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [fetched, setFetched] = useState(false);
   const [points, setPoints] = useState(100 | useCurrentUser.points);
 
   // access's chat and creates a quiz question
@@ -51,8 +49,8 @@ function QuizzesPage() {
     ]);
     console.log(data);
     setIsLoading(false);
-    // setQuestionAnwered(false);
   };
+
   useEffect(() => {
     fetchQuestion();
   }, []);
