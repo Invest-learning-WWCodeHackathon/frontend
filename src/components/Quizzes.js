@@ -31,9 +31,11 @@ function QuizzesPage() {
   const [currentQuestion, setcurrentQuestion] = useState({
     question: "Loading your next question",
   });
+  const [optionsArray, setoptionsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [questionAnswered, setQuestionAnwered] = useState(false);
+  // const [questionAnswered, setQuestionAnwered] = useState(false);
 
+  // access's chat and creates a quiz question
   const fetchQuestion = async () => {
     console.log("fetchQuestion running");
     const res = await fetch(
@@ -41,20 +43,19 @@ function QuizzesPage() {
     );
     const data = await res.json();
     setcurrentQuestion(data);
+    setoptionsArray([
+      { option: data.option1 },
+      { option: data.option2 },
+      { option: data.option3 },
+      { option: data.answer },
+    ]);
     console.log(data);
     setIsLoading(false);
-    setQuestionAnwered(false);
+    // setQuestionAnwered(false);
   };
   useEffect(() => {
     fetchQuestion();
-  }, [questionAnswered]);
-
-  const options_array = [
-    { option: currentQuestion.option1 },
-    { option: currentQuestion.option2 },
-    { option: currentQuestion.option3 },
-    { option: currentQuestion.answer },
-  ];
+  }, []);
 
   // stores the current selection
   const handleChange = (value) => {
@@ -62,9 +63,9 @@ function QuizzesPage() {
   };
 
   function givesAnswer(userAnswer, question) {
-    let correctAnswer;
-    correctAnswer = question.answer;
+    const correctAnswer = question.answer;
     console.log(correctAnswer, userAnswer);
+    setIsLoading(true);
     if (userAnswer === correctAnswer)
       // add points
       return toast({
@@ -91,7 +92,6 @@ function QuizzesPage() {
         },
       });
     }
-    setQuestionAnwered(true);
   }
   const handleSubmit = (value) => {
     givesAnswer(value, currentQuestion);
@@ -149,7 +149,7 @@ function QuizzesPage() {
             </Text>
             <RadioGroup size="lg" colorScheme="blue">
               <Stack>
-                {options_array.map((question) => {
+                {optionsArray.map((question) => {
                   return (
                     <Radio
                       key={question.option}
