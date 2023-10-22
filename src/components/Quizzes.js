@@ -14,6 +14,17 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+// https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion
+
+// {
+//   "question": "What is the difference between saving and investing?",
+//   "option1": "Saving is putting money aside for short-term goals, while investing is putting money into assets with the potential for long-term growth.",
+//   "option2": "Saving is putting money into assets with the potential for long-term growth, while investing is putting money aside for short-term goals.",
+//   "option3": "There is no difference between saving and investing.",
+//   "answer": "Saving is putting money aside for short-term goals, while investing is putting money into assets with the potential for long-term growth.",
+//   "explanation": "Saving involves setting aside money for short-term goals such as emergencies or specific purchases. Investing, on the other hand, involves putting money into assets such as stocks or mutual funds with the potential for long-term growth and higher returns over time."
+// }
+
 const customTheme = extendTheme({
   // Define your custom theme, including the blue color scheme.
   // You can set the color scheme using the `extendTheme` function.
