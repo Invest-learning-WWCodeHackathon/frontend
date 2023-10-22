@@ -33,7 +33,8 @@ function QuizzesPage() {
   });
   const [optionsArray, setoptionsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const [questionAnswered, setQuestionAnwered] = useState(false);
+  const [points, setPoints] = useState(100 | useCurrentUser.points);
+  const [questionAnswered, setQuestionAnwered] = useState(false);
 
   // access's chat and creates a quiz question
   const fetchQuestion = async () => {
@@ -44,10 +45,10 @@ function QuizzesPage() {
     const data = await res.json();
     setcurrentQuestion(data);
     setoptionsArray([
-      { option: data.option1 },
-      { option: data.option2 },
-      { option: data.option3 },
-      { option: data.answer },
+      { letter: "A", option: data.option1 },
+      { letter: "B", option: data.option2 },
+      { letter: "C", option: data.option3 },
+      { letter: "D", option: data.answer },
     ]);
     console.log(data);
     setIsLoading(false);
@@ -63,10 +64,10 @@ function QuizzesPage() {
   };
 
   function givesAnswer(userAnswer, question) {
-    const correctAnswer = question.answer;
-    console.log(correctAnswer, userAnswer);
-    setIsLoading(true);
-    if (userAnswer === correctAnswer)
+    let correctAnswer = question.answer;
+
+    if (userAnswer === correctAnswer) {
+      setPoints(points + 100);
       // add points
       return toast({
         title: `Correct! It is ${userAnswer}!`,
@@ -79,7 +80,7 @@ function QuizzesPage() {
           maxWidth: "100%",
         },
       });
-    else {
+    } else {
       return toast({
         title: `Incorrect the answer is :  ${correctAnswer}`,
         description: `Why? ${question.explanation}`,
@@ -95,6 +96,9 @@ function QuizzesPage() {
   }
   const handleSubmit = (value) => {
     givesAnswer(value, currentQuestion);
+    setcurrentQuestion({ question: "Loading your next question" });
+    setoptionsArray([]);
+    fetchQuestion();
   };
 
   const { value, getRadioProps } = useRadioGroup({
@@ -152,7 +156,7 @@ function QuizzesPage() {
                 {optionsArray.map((question) => {
                   return (
                     <Radio
-                      key={question.option}
+                      key={question.letter}
                       value={question.option}
                       {...getRadioProps({ value: question.option })}
                     >
@@ -161,7 +165,6 @@ function QuizzesPage() {
                   );
                 })}
                 {/* here is where selected is stored */}
-                <Text>You guessed: {value}</Text>
                 <Button
                   rounded={"full"}
                   size={"md"}
@@ -173,6 +176,17 @@ function QuizzesPage() {
                   onClick={() => handleSubmit(value)}
                 >
                   Submit your answer!
+                </Button>
+                <Button
+                  rounded={"full"}
+                  size={"md"}
+                  fontWeight={"normal"}
+                  px={6}
+                  colorScheme={"blue"}
+                  bg={"blue.400"}
+                  _hover={{ bg: "blue.500" }}
+                >
+                  You Have {points}! Go to Stock Market?
                 </Button>
               </Stack>
             </RadioGroup>
