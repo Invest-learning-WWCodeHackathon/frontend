@@ -34,7 +34,6 @@ function QuizzesPage() {
   const [optionsArray, setoptionsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [points, setPoints] = useState(100 | useCurrentUser.points);
-  const [questionAnswered, setQuestionAnwered] = useState(false);
 
   // access's chat and creates a quiz question
   const fetchQuestion = async () => {
@@ -177,17 +176,19 @@ function QuizzesPage() {
                 >
                   Submit your answer!
                 </Button>
-                <Button
-                  rounded={"full"}
-                  size={"md"}
-                  fontWeight={"normal"}
-                  px={6}
-                  colorScheme={"blue"}
-                  bg={"blue.400"}
-                  _hover={{ bg: "blue.500" }}
-                >
-                  You Have {points}! Go to Stock Market?
-                </Button>
+                <Link href="/dashboard">
+                  <Button
+                    rounded={"full"}
+                    size={"md"}
+                    fontWeight={"normal"}
+                    px={6}
+                    colorScheme={"blue"}
+                    bg={"blue.400"}
+                    _hover={{ bg: "blue.500" }}
+                  >
+                    You Have {points}! Go to Stock Market?
+                  </Button>
+                </Link>
               </Stack>
             </RadioGroup>
           </Stack>
