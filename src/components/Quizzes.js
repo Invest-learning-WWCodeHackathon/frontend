@@ -24,35 +24,66 @@ const customTheme = extendTheme({
 
 function QuizzesPage() {
   const toast = useToast();
-
+  //added authorized body and unauthorized body
+  const { isAuthorized } = useCurrentUser();
   const [currentQuestion, setcurrentQuestion] = useState({
     question: "Loading your next question",
   });
   const [optionsArray, setoptionsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [points, setPoints] = useState(100 | useCurrentUser.points);
+  const [points, setPoints] = useState(1000 | useCurrentUser.points);
+  const [clickMeButton, setClickMeButton] = useState("Click To Start");
 
   // access's chat and creates a quiz question
   const fetchQuestion = async () => {
+    if (!isAuthorized) {
+      console.log("fetchQuestion NOT running");
+      return;
+    }
     console.log("fetchQuestion running");
-    const res = await fetch(
-      `https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion`
-    );
-    const data = await res.json();
-    setcurrentQuestion(data);
-    setoptionsArray([
-      { letter: "A", option: data.option1 },
-      { letter: "B", option: data.option2 },
-      { letter: "C", option: data.option3 },
-      { letter: "D", option: data.answer },
-    ]);
-    console.log(data);
+
+    try {
+      const res = await fetch(
+        `https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion`
+      );
+      const data = await res.json();
+      setcurrentQuestion(data);
+      setoptionsArray([
+        { letter: "A", option: data.option1 },
+        { letter: "B", option: data.option2 },
+        { letter: "C", option: data.option3 },
+        { letter: "D", option: data.answer },
+      ]);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      // use a default question
+      let data = {
+        question: "What is the difference between saving and investing?",
+        option1:
+          "Saving is putting money aside for short-term goals, while investing is putting money into assets with the potential for quickly growing sums.",
+        option2:
+          "Saving is putting money into assets with the potential for long-term growth, while investing is putting money aside for short-term goals.",
+        option3: "There is no difference between saving and investing.",
+        answer:
+          "Saving is putting money aside for short-term goals, while investing is putting money into assets with the potential for long-term growth.",
+        explanation:
+          "Saving involves setting aside money for short-term goals such as emergencies or specific purchases. Investing, on the other hand, involves putting money into assets such as stocks or mutual funds with the potential for long-term growth and higher returns over time.",
+      };
+      setcurrentQuestion(data);
+      setoptionsArray([
+        { letter: "A", option: data.option1 },
+        { letter: "B", option: data.option2 },
+        { letter: "C", option: data.option3 },
+        { letter: "D", option: data.answer },
+      ]);
+    }
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    fetchQuestion();
-  }, []);
+  // useEffect(() => {
+  //   fetchQuestion();
+  // }, []);
 
   // stores the current selection
   const handleChange = (value) => {
@@ -61,7 +92,18 @@ function QuizzesPage() {
 
   function givesAnswer(userAnswer, question) {
     let correctAnswer = question.answer;
-
+    if (!correctAnswer) {
+      return toast({
+        title: `Loading Questions!`,
+        status: "info",
+        duration: 5000,
+        position: "top",
+        containerStyle: {
+          width: "800px",
+          maxWidth: "100%",
+        },
+      });
+    }
     if (userAnswer === correctAnswer) {
       setPoints(points + 100);
       // add points
@@ -91,6 +133,7 @@ function QuizzesPage() {
     }
   }
   const handleSubmit = (value) => {
+    setClickMeButton("Submit your answer!");
     givesAnswer(value, currentQuestion);
     setcurrentQuestion({ question: "Loading your next question" });
     setoptionsArray([]);
@@ -102,8 +145,6 @@ function QuizzesPage() {
     onChange: handleChange,
   });
 
-  //added authorized body and unauthorized body
-  const { isAuthorized } = useCurrentUser();
   const quizAuthorizedBody = (
     <>
       <ChakraProvider theme={customTheme}>
@@ -171,7 +212,8 @@ function QuizzesPage() {
                   _hover={{ bg: "blue.500" }}
                   onClick={() => handleSubmit(value)}
                 >
-                  Submit your answer!
+                  {" "}
+                  {clickMeButton}
                 </Button>
                 <Link href="/dashboard">
                   <Button
