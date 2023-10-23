@@ -34,11 +34,13 @@ import {
 } from '@chakra-ui/react'
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons'
 import { StockChart } from './StockChart';
+import useCurrentUser from '../hooks/useCurrectUser';
 
 
 
-const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
+const StockCard = ({ symbol, name, price }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { username, id } = useCurrentUser();
     const toast = useToast();
 
     const [selectedOption, setSelectedOption] = useState('num');
@@ -58,50 +60,14 @@ const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
     useEffect(() => {
         calculateNumOfStocks();
     }, [amountToSpend, stockPrice]);
-    // const handleBuyStock = (symbol, name, price) => {
-    //     const purchasedStock = {
-    //         name,
-    //         symbol,
-    //         stocksowned: 1,
-    //         Price: price,
-    //     };
-    //     const stockDataJSON = localStorage.getItem('stockData');
-    //     const stockData = stockDataJSON ? JSON.parse(stockDataJSON) : [];
-    //     let stockAlreadyExists = false;
-    //     if (stockData) {
-    //         stockAlreadyExists = stockData.some((stock) => stock.symbol === symbol);
-    //     }
 
-    //     if (stockAlreadyExists) {
-    //         toast({
-    //             title: "Stock Exists",
-    //             description: `You already own ${name}`,
-    //             status: 'success',
-    //             duration: 5000,
-    //             isClosable: true,
-    //         })
-    //     } else {
-    //         const updatedStockData = [...stockData, purchasedStock];
-    //         const updatedStockDataJSON = JSON.stringify(updatedStockData);
-    //         localStorage.setItem('stockData', updatedStockDataJSON);
-    //         toast({
-    //             title: "Stock Added",
-    //             description: `We have added ${name} stock to your account`,
-    //             status: 'success',
-    //             duration: 5000,
-    //             isClosable: true,
-    //         })
-    //     }
-
-    //     // StockToast("Stock Added", `We have added ${name} stock to your account`);
-    // }
-
-    const handleBuyStock = () => {
-    }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log("handle submit called!",selectedAction, e.target.num.value);
-        // console.log(e);
+        const getUserData = await fetch(`https://youth-invest-backend-sharmilathippab.replit.app/db/get_by_id?user_id=${id}`);
+        const userData = await getUserData.json();
+        const accountBalance = userData.data[0].points;
+        console.log(accountBalance, amountToSpend, numOfStocks);
+        // await fetch(`https://youth-invest-backend-sharmilathippab.replit.app/stock/buy_stocks?ticker=${symbol}&quantity=${numOfStocks}&buying_price=${price}&current_points=1000&user_id=${id}`)
         setNumOfStocks(0);
         onClose();
     }
@@ -133,23 +99,20 @@ const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
                                         </HStack>
                                     </RadioGroup>
                                 </FormControl>
-                                <br/>
+                                <br />
                                 {selectedOption === "num" && (
                                     <>
                                         <FormLabel>Number of Stocks</FormLabel>
                                         <NumberInput min={0} id="num">
-                                            <NumberInputField />
+                                            <NumberInputField 
+                                            onChange={(e) => setNumOfStocks(e.target.value)}/>
                                             <NumberInputStepper>
                                                 <NumberIncrementStepper />
                                                 <NumberDecrementStepper />
                                             </NumberInputStepper>
                                         </NumberInput>
                                         <br />
-                                        {numOfStocks > 0 && (
-                                            <Text fontSize="sm" color="gray.500">
-                                                You can buy approximately {numOfStocks} stocks.
-                                            </Text>
-                                        )}
+
                                     </>
                                 )}
 
@@ -166,7 +129,17 @@ const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
                             </ModalBody>
 
                             <ModalFooter>
-                                <Button colorScheme="blue" mr={3} onClick={() => { setNumOfStocks(0); onClose(); }}>
+                                {/* {selectedOption === "num" && (
+                                    <Text fontSize="sm" color="gray.500">
+                                        You can buy approximately {numOfStocks} stocks.
+                                    </Text>
+                                )} */}
+                                {selectedOption === "amt" && (
+                                    <Text fontSize="sm" color="gray.500">
+                                        You can buy approximately {numOfStocks} stocks with ${amountToSpend}.
+                                    </Text>
+                                )}
+                                <Button colorScheme="blue" mr={3} onClick={() => { setNumOfStocks(0); setAmountToSpend(0); onClose(); }}>
                                     Close
                                 </Button>
                                 <Button colorScheme="green" type="submit">
@@ -185,20 +158,31 @@ const StockCard = ({ symbol, name, price, dayHigh, dayLow }) => {
 }
 
 export default function ExploreContent() {
+    const listOfTickers = ["AAPL", "MSFT", "GOOGL", "TSLA", "AMZN", "META"
+    // , "NVDA", "JPM", "JNJ", "V", "PG", "GE", "BABA", "KO", "NFLX", "BA", "DIS"
+];
     const [stocks, setStocks] = useState([]);
-    const fetchAllStocks = async () => {
-        const res = await fetch("http://127.0.0.1:5000/stock/list_all_tickers");
-        const data = await res.json();
-        setStocks(data);
-    }
+    const getAllStocks = async () => {
+        const stockData = [];
+    
+        for (const stock of listOfTickers) {
+            const res = await fetch(`https://youth-invest-backend-sharmilathippab.replit.app/stock/trend?ticker=${stock}`);
+            const data = await res.json();
+            
+            const lastItem = data[data.length - 1];
+            lastItem.symbol = stock;
+            stockData.push(lastItem);
+        }
+        
+        setStocks(stockData);
+    };
+
     useEffect(() => {
-        fetchAllStocks();
-        // console.log(stocks.length)
+        getAllStocks();
     }, []);
     return (
 
         <Box p={4}>
-
             {
                 (stocks?.length == 0) ?
                     <Center bg='' h='60vh' color='blue.500'>
@@ -213,8 +197,8 @@ export default function ExploreContent() {
                     </Center>
                     :
                     stocks?.map((stock, index) => (
-                        <Container maxW={'3xl'} key={stock.ticker}>
-                            <StockCard symbol={stock.ticker} name={stock.companyName} price={stock.price} dayHigh={stock.dayHigh} dayLow={stock.dayLow} />
+                        <Container maxW={'3xl'} key={stock.Name}>
+                            <StockCard symbol={stock.symbol} name={stock.Name} price={stock.CurrentPrice} />
                         </Container>
                     ))
             }
