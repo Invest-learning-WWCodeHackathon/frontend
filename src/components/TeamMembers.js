@@ -12,6 +12,7 @@ import {
 
 import Pradnya from "../assests/Pradnya.jpg";
 import Elizabeth from "../assests/Elizabeth.png";
+import Sharmila from "../assests/Sharmila.jpg";
 
 // Define an array of team members with their information
 const teamMembers = [
@@ -36,8 +37,8 @@ const teamMembers = [
   {
     id: 4,
     name: "Sharmila Thippabhotla",
-    role: "Designer",
-    photo: "jane-smith-photo.jpg",
+    role: "Back-end Developer, Langchain",
+    photo: Sharmila,
   },
 ];
 
