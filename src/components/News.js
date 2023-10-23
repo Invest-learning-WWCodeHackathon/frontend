@@ -38,7 +38,7 @@ export default function News() {
   const [newsArticles, setNewsArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const fetchNews = async () => {
-    const res = await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`);
+    const res = await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=204322c92ada456f943e5cd90109057c`);
     const data = await res.json();
     console.log(data);
     setNewsArticles(data.articles);
@@ -46,7 +46,12 @@ export default function News() {
   }
   useEffect(() => {
     fetchNews();
-  }, [])
+  }, []);
+
+  if (!newsArticles) {
+    return <div>Loading...</div>;
+  }
+  
   return (
     <ChakraProvider >
       <CSSReset />
