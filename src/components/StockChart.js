@@ -50,39 +50,56 @@ export function StockChart({ symbol }) {
   const [stockData, setStockData] = useState([]);
   const [labels, setLabels] = useState([]);
   const [values, setvalues] = useState([]);
-  const fetchHistory = async () => {
-    const res = await fetch(`https://youth-invest-backend-sharmilathippab.replit.app/stock/trend?ticker=${symbol}`);
-    const data = await res.json();
-    console.log(data);
-    setStockData(data);
-    const labels = stockData?.map(item => {
-      // Convert the date to a more readable format, e.g., "MMMM YYYY"
-      const date = new Date(item.Date);
-      return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    });
-  
-    const highValues = stockData?.map(item => item.High);
-    setLabels(labels);
-    setvalues(highValues);
-  }
-  
-  const data = {
+  const [data, setData] = useState({
     // labels: ["January", "February", "March", "April"],
-    labels: labels,
+    labels: [],
     datasets: [
       {
         label: "",
-        data: values,
+        data: [],
         // data: [-800, 372, -374, 684],
         borderColor: "rgba(66, 153, 225)",
         backgroundColor: "rgba(66, 153, 225)",
       }
     ],
-
-  };
+  })
+  const fetchHistory = async () => {
+    const res = await fetch(`https://youth-invest-backend-sharmilathippab.replit.app/stock/trend?ticker=${symbol}`);
+    const datas = await res.json();
+    setStockData(datas)
+  }
+  
   useEffect(()=>{
-    fetchHistory();
-  },[])
+    const datas = fetchHistory(); 
+  },[]);
+
+  useEffect(()=>{
+
+    const label = stockData?.slice(0, -1).map(item => {
+      const date = new Date(item.Date);
+      const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get month (1-12) and pad with '0' if needed
+      const year = date.getFullYear().toString().slice(-2); // MM/YY
+      return `${month}/${year}`;
+    });
+  
+    const highValues = stockData?.slice(0, -1).map(item => item.High);
+    setLabels(label);
+    setvalues(highValues);
+    setData({
+      // labels: ["January", "February", "March", "April"],
+      labels: labels,
+      datasets: [
+        {
+          label: "",
+          data: values,
+          // data: [-800, 372, -374, 684],
+          borderColor: "rgba(66, 153, 225)",
+          backgroundColor: "rgba(66, 153, 225)",
+        }
+      ],
+    })
+  }, [stockData])
+
   return (
     <Box>
       <Line options={options} data={data} />
