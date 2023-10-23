@@ -24,16 +24,22 @@ const customTheme = extendTheme({
 
 function QuizzesPage() {
   const toast = useToast();
-
+  //added authorized body and unauthorized body
+  const { isAuthorized } = useCurrentUser();
   const [currentQuestion, setcurrentQuestion] = useState({
     question: "Loading your next question",
   });
   const [optionsArray, setoptionsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [points, setPoints] = useState(100 | useCurrentUser.points);
+  const [clickMeButton, setClickMeButton] = useState("Click To Start");
 
   // access's chat and creates a quiz question
   const fetchQuestion = async () => {
+    if (!isAuthorized) {
+      console.log("fetchQuestion NOT running");
+      return;
+    }
     console.log("fetchQuestion running");
     const res = await fetch(
       `https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion`
@@ -61,7 +67,18 @@ function QuizzesPage() {
 
   function givesAnswer(userAnswer, question) {
     let correctAnswer = question.answer;
-
+    if (!correctAnswer) {
+      return toast({
+        title: `Loading Questions!`,
+        status: "info",
+        duration: 5000,
+        position: "top",
+        containerStyle: {
+          width: "800px",
+          maxWidth: "100%",
+        },
+      });
+    }
     if (userAnswer === correctAnswer) {
       setPoints(points + 100);
       // add points
@@ -91,6 +108,7 @@ function QuizzesPage() {
     }
   }
   const handleSubmit = (value) => {
+    setClickMeButton("Submit your answer!");
     givesAnswer(value, currentQuestion);
     setcurrentQuestion({ question: "Loading your next question" });
     setoptionsArray([]);
@@ -102,8 +120,6 @@ function QuizzesPage() {
     onChange: handleChange,
   });
 
-  //added authorized body and unauthorized body
-  const { isAuthorized } = useCurrentUser();
   const quizAuthorizedBody = (
     <>
       <ChakraProvider theme={customTheme}>
@@ -171,7 +187,8 @@ function QuizzesPage() {
                   _hover={{ bg: "blue.500" }}
                   onClick={() => handleSubmit(value)}
                 >
-                  Submit your answer!
+                  {" "}
+                  {clickMeButton}
                 </Button>
                 <Link href="/dashboard">
                   <Button
