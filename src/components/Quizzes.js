@@ -31,7 +31,7 @@ function QuizzesPage() {
   });
   const [optionsArray, setoptionsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [points, setPoints] = useState(100 | useCurrentUser.points);
+  const [points, setPoints] = useState(1000 | useCurrentUser.points);
   const [clickMeButton, setClickMeButton] = useState("Click To Start");
 
   // access's chat and creates a quiz question
