@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     Container,
@@ -32,15 +32,27 @@ import {
     FormLabel,
     FormControl
 } from "@chakra-ui/react";
+import useCurrentUser from '../hooks/useCurrectUser';
 
 export default function StocksOwnedTable() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { username, id } = useCurrentUser();
     const [stockData, setStockData] = useState(JSON.parse(localStorage.getItem('stockData')) || []);
     const [selectedAction, setSelectedAction] = useState(''); // buy or sell
     const tableHeaderColor = useColorModeValue('gray.600', 'white');
     const tableHeaderBg = useColorModeValue('gray.300', 'gray.600');
 
     localStorage.setItem('stockData', JSON.stringify(stockData));
+    const fetchUserStockData = async() =>{
+        const userData = await fetch(`https://youth-invest-backend-sharmilathippab.replit.app/stock/get_user_stock_portfolio?user_id=${id}`);
+        const data = await userData.json();
+        console.log(data[1]);
+        setStockData(data[1]);
+    }
+
+    useEffect(()=>{
+        fetchUserStockData();
+    },[])
 
     const handle = (action) => {  //handle buy or sell clicked
         setSelectedAction(action);
@@ -88,14 +100,14 @@ export default function StocksOwnedTable() {
                                 <Tbody>
                                     {stockData.map((item, index) => (
                                         <Tr key={index}>
-                                            <Td>{item.name} ( {item.symbol} )</Td>
-                                            <Td isNumeric>{item.stocksowned}</Td>
+                                            <Td>{item.ticker} ( {item.ticker} )</Td>
+                                            <Td isNumeric>{item.quantity}</Td>
                                             <Td isNumeric>${item.Price}</Td>
-                                            <Td isNumeric>${item.Price * item.stocksowned}</Td>
+                                            <Td isNumeric>${item.equity}</Td>
                                             <Td>
                                                 <ButtonGroup variant='outline' spacing='2' >
                                                     <Button colorScheme='green' onClick={() => handle('Buy')} >Buy</Button>
-                                                    <Button colorScheme='red' onClick={() => handle('Trade')} >Trade</Button>
+                                                    <Button colorScheme='red' onClick={() => handle('Trade')} >Sell</Button>
                                                 </ButtonGroup>
                                                 <Modal isOpen={isOpen} onClose={onClose}>
                                                     <ModalOverlay />
