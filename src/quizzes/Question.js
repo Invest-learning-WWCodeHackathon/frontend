@@ -8,7 +8,7 @@ function shuffleArray(array) {
 const testQuestion = {
   question: "What is the difference between saving and investing?",
   option1:
-    "xxxSaving is putting money aside for short-term goals, while investing is putting money into assets with the potential for long-term growth.",
+    "Saving is putting money aside for short-term goals, while investing is putting money into assets with the potential for quickly growing sums.",
   option2:
     "Saving is putting money into assets with the potential for long-term growth, while investing is putting money aside for short-term goals.",
   option3: "There is no difference between saving and investing.",

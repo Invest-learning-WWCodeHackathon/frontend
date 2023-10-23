@@ -41,24 +41,49 @@ function QuizzesPage() {
       return;
     }
     console.log("fetchQuestion running");
-    const res = await fetch(
-      `https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion`
-    );
-    const data = await res.json();
-    setcurrentQuestion(data);
-    setoptionsArray([
-      { letter: "A", option: data.option1 },
-      { letter: "B", option: data.option2 },
-      { letter: "C", option: data.option3 },
-      { letter: "D", option: data.answer },
-    ]);
-    console.log(data);
+
+    try {
+      const res = await fetch(
+        `https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion`
+      );
+      const data = await res.json();
+      setcurrentQuestion(data);
+      setoptionsArray([
+        { letter: "A", option: data.option1 },
+        { letter: "B", option: data.option2 },
+        { letter: "C", option: data.option3 },
+        { letter: "D", option: data.answer },
+      ]);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      // use a default question
+      let data = {
+        question: "What is the difference between saving and investing?",
+        option1:
+          "Saving is putting money aside for short-term goals, while investing is putting money into assets with the potential for quickly growing sums.",
+        option2:
+          "Saving is putting money into assets with the potential for long-term growth, while investing is putting money aside for short-term goals.",
+        option3: "There is no difference between saving and investing.",
+        answer:
+          "Saving is putting money aside for short-term goals, while investing is putting money into assets with the potential for long-term growth.",
+        explanation:
+          "Saving involves setting aside money for short-term goals such as emergencies or specific purchases. Investing, on the other hand, involves putting money into assets such as stocks or mutual funds with the potential for long-term growth and higher returns over time.",
+      };
+      setcurrentQuestion(data);
+      setoptionsArray([
+        { letter: "A", option: data.option1 },
+        { letter: "B", option: data.option2 },
+        { letter: "C", option: data.option3 },
+        { letter: "D", option: data.answer },
+      ]);
+    }
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    fetchQuestion();
-  }, []);
+  // useEffect(() => {
+  //   fetchQuestion();
+  // }, []);
 
   // stores the current selection
   const handleChange = (value) => {
