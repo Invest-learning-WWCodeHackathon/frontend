@@ -25,7 +25,7 @@ const customTheme = extendTheme({
 function QuizzesPage() {
   const toast = useToast();
   //added authorized body and unauthorized body
-  const { isAuthorized } = useCurrentUser();
+  const { isAuthorized, username } = useCurrentUser();
   const [currentQuestion, setcurrentQuestion] = useState({
     question: "Loading your next question",
   });
@@ -34,6 +34,58 @@ function QuizzesPage() {
   const [points, setPoints] = useState(1000 | useCurrentUser.points);
   const [clickMeButton, setClickMeButton] = useState("Click To Start");
 
+  const updatePoints = async () => {
+    console.log("updatePoints running");
+    try {
+      const update = await fetch(
+        `https://youth-invest-backend-sharmilathippab.replit.app/update_points`
+      );
+      const data = await update.json();
+      console.log("updatepointsdata", data);
+    } catch (error) {
+      console.log(error);
+      // use a default question
+      let data = {
+        user_id: username,
+        current_points: 1000 + 100,
+        was_correct: true,
+      };
+    }
+    //   setIsLoading(false);
+  };
+
+  const updatePointsChat = async () => {
+    console.log("updatePoints running");
+    try {
+      const response = await fetch(
+        `https://youth-invest-backend-sharmilathippab.replit.app/update_points?user_id=${username}&current_points=${
+          points + 100
+        }&was_correct=${true}`,
+        {
+          method: "POST", // Use POST request to send data to the server
+          headers: {
+            "Content-Type": "application/json", // Specify the content type
+          },
+          body: JSON.stringify({
+            user_id: username, // Replace with the actual user ID
+            current_points: points + 100, // Replace with the actual points value
+            was_correct: true, // Replace with the actual correctness status
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("updatepointsdata", data);
+      } else {
+        console.error("Failed to update points");
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle the error appropriately
+    }
+  };
+
   // access's chat and creates a quiz question
   const fetchQuestion = async () => {
     if (!isAuthorized) {
@@ -41,6 +93,7 @@ function QuizzesPage() {
       return;
     }
     console.log("fetchQuestion running");
+    updatePointsChat();
 
     try {
       const res = await fetch(
