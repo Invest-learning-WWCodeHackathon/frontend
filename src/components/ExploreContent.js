@@ -47,7 +47,11 @@ const StockCard = ({ symbol, name, price }) => {
     const [stockPrice, setStockPrice] = useState(price); // Replace XXX with the actual stock price
     const [amountToSpend, setAmountToSpend] = useState(0);
     const [numOfStocks, setNumOfStocks] = useState(0);
-
+    
+    const handleNumOfStocks = (value) => {
+        setNumOfStocks(value);
+        setAmountToSpend(numOfStocks * price);
+    };
     const calculateNumOfStocks = () => {
         if (stockPrice > 0) {
             const stocksToBuy = amountToSpend / stockPrice;
@@ -67,8 +71,10 @@ const StockCard = ({ symbol, name, price }) => {
         const userData = await getUserData.json();
         const accountBalance = userData.data[0].points;
         console.log(accountBalance, amountToSpend, numOfStocks);
-        // await fetch(`https://youth-invest-backend-sharmilathippab.replit.app/stock/buy_stocks?ticker=${symbol}&quantity=${numOfStocks}&buying_price=${price}&current_points=1000&user_id=${id}`)
+        const newAccountBalance = accountBalance - amountToSpend;
+        await fetch(`https://youth-invest-backend-sharmilathippab.replit.app/stock/buy_stocks?ticker=${symbol}&quantity=${numOfStocks}&buying_price=${price}&current_points=${newAccountBalance}&user_id=${id}`)
         setNumOfStocks(0);
+        setAmountToSpend(0);
         onClose();
     }
     return (
@@ -103,10 +109,15 @@ const StockCard = ({ symbol, name, price }) => {
                                 {selectedOption === "num" && (
                                     <>
                                         <FormLabel>Number of Stocks</FormLabel>
-                                        <NumberInput min={0} id="num">
-                                            <NumberInputField 
-                                            onChange={(e) => setNumOfStocks(e.target.value)}/>
-                                            <NumberInputStepper>
+                                        <NumberInput min={0} id="num" value={numOfStocks} onChange={handleNumOfStocks}
+                                        // {(e) =>{
+                                        //     console.log(e);
+                                        //     console.log(value);
+                                        //     setNumOfStocks(e);
+                                        // } }
+                                        >
+                                            <NumberInputField />
+                                            <NumberInputStepper >
                                                 <NumberIncrementStepper />
                                                 <NumberDecrementStepper />
                                             </NumberInputStepper>
