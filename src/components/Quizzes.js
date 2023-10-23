@@ -25,7 +25,7 @@ const customTheme = extendTheme({
 function QuizzesPage() {
   const toast = useToast();
   //added authorized body and unauthorized body
-  const { isAuthorized, username, id } = useCurrentUser();
+  const { isAuthorized, username } = useCurrentUser();
   const [currentQuestion, setcurrentQuestion] = useState({
     question: "Loading your next question",
   });
@@ -78,7 +78,7 @@ function QuizzesPage() {
     console.log("fetchQuestion running");
     try {
       const res = await fetch(
-        `https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion`
+        `https://youth-invest-backend-sharmilathippab.replit.app/quizQuestion?user_id=${username}`
       );
       const data = await res.json();
       setcurrentQuestion(data);
@@ -86,7 +86,7 @@ function QuizzesPage() {
         { letter: "A", option: data.option1 },
         { letter: "B", option: data.option2 },
         { letter: "C", option: data.option3 },
-        // { letter: "D", option: data.answer },
+        { letter: "D", option: data.answer },
       ]);
       console.log(data);
     } catch (error) {
@@ -109,7 +109,7 @@ function QuizzesPage() {
         { letter: "A", option: data.option1 },
         { letter: "B", option: data.option2 },
         { letter: "C", option: data.option3 },
-        // { letter: "D", option: data.answer },
+        { letter: "D", option: data.answer },
       ]);
     }
     setIsLoading(false);
@@ -124,7 +124,7 @@ function QuizzesPage() {
     console.log("line 44", value);
   };
 
-  const givesAnswer = async (userAnswer, question) => {
+  const givesAnswer = (userAnswer, question) => {
     let correctAnswer = question.answer;
     if (!correctAnswer) {
       return toast({
